@@ -6,7 +6,7 @@
           <img class="logo" src="~/assets/img/happy.png" alt="logo">
         </router-link>
         <nuxt-link to="/users">Users</nuxt-link>
-        <a class="github" href="https://github.com/belinghy/cpsc304" target="_blank" rel="noopener">
+        <a class="github" href="https://github.com/johnsonvu/cpsc304-project-starter" target="_blank" rel="noopener">
           Github
         </a>
       </nav>
