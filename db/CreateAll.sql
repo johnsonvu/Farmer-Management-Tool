@@ -10,7 +10,8 @@ DROP TABLE IF EXISTS Farmer;
 CREATE TABLE Farmer(
     SIN INTEGER,
     FirstName CHAR(150),
-    LastName CHAR(150)
+    LastName CHAR(150),
+    PRIMARY KEY (SIN)
 );
 
 DROP TABLE IF EXISTS HasHealthInsurance;
@@ -24,15 +25,14 @@ CREATE TABLE HasHealthInsurance (
 
 DROP TABLE IF EXISTS Manager;
 CREATE TABLE Manager(
-    SIN INTEGER
+    SIN INTEGER,
     PRIMARY KEY (SIN)
 );
 
 DROP TABLE IF EXISTS Worker;
 CREATE TABLE Worker(
     SIN INTEGER,
-    FirstName CHAR(150),
-    LastName CHAR(150),
+    Manager_SIN INTEGER,
     PRIMARY KEY (SIN),
     FOREIGN KEY (SIN) REFERENCES Farmer,
     FOREIGN KEY (Manager_SIN) REFERENCES Manager
@@ -47,6 +47,7 @@ CREATE TABLE Animal(
     PenNum INTEGER,
     SIN INTEGER,
     Species CHAR(150),
+    PenNumber INTEGER,
     PRIMARY KEY (Id),
     FOREIGN KEY (PenNumber) REFERENCES Penhouse,
     FOREIGN KEY (SIN) REFERENCES Farmer
@@ -58,40 +59,40 @@ CREATE TABLE Product(
     ProductionTime TIME,
     Id INTEGER,
     SIN INTEGER,
-    PRIMARY KEY (pId),
+    PRIMARY KEY (ProductId),
     FOREIGN KEY (Id) REFERENCES Animal,
     FOREIGN KEY (SIN) REFERENCES Farmer
 );
 
 DROP TABLE IF EXISTS Milk;
 CREATE TABLE Milk(
-    pId INTEGER,
+    ProductId INTEGER,
     Id INTEGER,
     Volume INTEGER,
-    PRIMARY KEY (pId),
-    FOREIGN KEY (pId) REFERENCES Product,
+    PRIMARY KEY (ProductId),
+    FOREIGN KEY (ProductId) REFERENCES Product,
     FOREIGN KEY (Id) REFERENCES Animal
 );
 
 DROP TABLE IF EXISTS Egg;
 CREATE TABLE Egg(
-    pId INTEGER,
+    ProductId INTEGER,
     Id INTEGER,
     Quantity INTEGER,
     Size INTEGER,
-    PRIMARY KEY (pId),
-    FOREIGN KEY (pId) REFERENCES Product,
+    PRIMARY KEY (ProductId),
+    FOREIGN KEY (ProductId) REFERENCES Product,
     FOREIGN KEY (Id) REFERENCES Animal
 );
 
 DROP TABLE IF EXISTS Wool;
 CREATE TABLE Wool(
-    pId INTEGER,
+    ProductId INTEGER,
     Id INTEGER,
     Weight INTEGER,
     Grade INTEGER,
-    PRIMARY KEY (pId),
-    FOREIGN KEY (pId) REFERENCES Product,
+    PRIMARY KEY (ProductId),
+    FOREIGN KEY (ProductId) REFERENCES Product,
     FOREIGN KEY (Id) REFERENCES Animal
 );
 
@@ -111,39 +112,39 @@ DROP TABLE IF EXISTS Harvests;
 CREATE TABLE Harvests(
     Id INTEGER,
     SIN INTEGER,
-    pId INTEGER,
-    Date DATETIME,
+    ProductId INTEGER,
+    Date TIMESTAMP WITHOUT TIME ZONE,
     Duration INTEGER,
-    PRIMARY KEY (Id, pId),
+    PRIMARY KEY (Id, ProductId),
     FOREIGN KEY (Id) REFERENCES Animal,
-    FOREIGN KEY (pId) REFERENCES Product
+    FOREIGN KEY (ProductId) REFERENCES Product
 );
 
 DROP TABLE IF EXISTS CowProduces;
 CREATE TABLE CowProduces(
-    pId INTEGER,
+    ProductId INTEGER,
     Id INTEGER,
-    PRIMARY KEY (pId),
+    PRIMARY KEY (ProductId),
     FOREIGN KEY (Id) REFERENCES Animal,
-    FOREIGN KEY (pId) REFERENCES Product
+    FOREIGN KEY (ProductId) REFERENCES Product
 );
 
 DROP TABLE IF EXISTS ChickenProduces;
 CREATE TABLE ChickenProduces(
-    pId INTEGER,
+    ProductId INTEGER,
     Id INTEGER,
-    PRIMARY KEY (pId),
+    PRIMARY KEY (ProductId),
     FOREIGN KEY (Id) REFERENCES Animal,
-    FOREIGN KEY (pId) REFERENCES Product
+    FOREIGN KEY (ProductId) REFERENCES Product
 );
 
 DROP TABLE IF EXISTS SheepProduces;
 CREATE TABLE SheepProduces(
-    pId INTEGER,
+    ProductId INTEGER,
     Id INTEGER,
-    PRIMARY KEY (pId),
+    PRIMARY KEY (ProductId),
     FOREIGN KEY (Id) REFERENCES Animal,
-    FOREIGN KEY (pId) REFERENCES Product
+    FOREIGN KEY (ProductId) REFERENCES Product
 );
 
 DROP TABLE IF EXISTS AnimalMaintenance;
@@ -157,6 +158,6 @@ CREATE TABLE AnimalMaintenance(
 DROP TABLE IF EXISTS ExpirationLookup;
 CREATE TABLE ExpirationLookup(
     ProductionTime TIME,
-    ExpiryDate DATETIME,
+    ExpiryDate TIMESTAMP WITHOUT TIME ZONE,
     PRIMARY KEY (ProductionTime)
 );
