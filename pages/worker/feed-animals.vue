@@ -49,7 +49,7 @@
 
     export default {
         async asyncData () {
-            let { data } = await axios.get('/api/animals')
+            let { data } = await axios.get('/api/animals/feed-list')
             console.log(data)
             return { animals: data }
         },
@@ -79,7 +79,7 @@
             },
             feed (index) {
                 this.animals[index].hasfed = true
-                axios.post('/api/meal-feedings', {
+                axios.post('/api/animals/feed', {
                     headers:
                         {
                             'Content-Type': 'application/json'
@@ -158,7 +158,7 @@
         color: white;
         padding: 0.5em 2em;
         text-align: center;
-        font-size: 1.2em;
+        font-size: 1em;
         display: inline-block;
         transition-duration: 0.4s;
         cursor: pointer;
