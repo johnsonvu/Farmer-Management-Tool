@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 
 const router = Router()
 
-router.get('/animals', function (req, res, next) {
+router.get('/animals/feed-list', function (req, res, next) {
     const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, m.food, m.water,
         CASE WHEN m.date IS NULL
             THEN false
@@ -22,7 +22,25 @@ router.get('/animals', function (req, res, next) {
         })
 })
 
-router.post('/animals/meal-feedings', bodyParser.json(), function (req, res, next) {
+router.get('/animals/harvest-list', function (req, res, next) {
+    const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, m.food, m.water,
+        CASE WHEN m.date IS NULL
+            THEN false
+            ELSE TRUE
+        END AS hasFed
+        FROM Animal a
+        LEFT JOIN (
+            SELECT * FROM Mealfeeding WHERE date = (NOW() AT TIME ZONE 'US/Pacific')::DATE
+        ) AS m
+        ON a.id = m.AnimalId`
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(animals => {
+            console.log(animals)
+            res.json(animals)
+        })
+})
+
+router.post('/animals/feed', bodyParser.json(), function (req, res, next) {
     const date = req.body.data.date
     const food = req.body.data.food
     const water = req.body.data.water

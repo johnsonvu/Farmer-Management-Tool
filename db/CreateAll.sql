@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS MealFeeding;
 DROP TABLE IF EXISTS Wool;
 DROP TABLE IF EXISTS Egg;
 DROP TABLE IF EXISTS Milk;
+DROP SEQUENCE IF EXISTS ProductId_seq;
 DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS Worker;
 DROP TABLE IF EXISTS Manager;
@@ -93,45 +94,56 @@ ALTER TABLE AnimalId_seq OWNER TO yvttysuu;
 INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 5, 90, 'Edmond', 222222222, 'CHICKEN', 1);
 INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 3, 110, 'Ian', 222222222, 'SHEEP', 2);
 INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 1, 55, 'Jeffrey', 222222222, 'CHICKEN', 1);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 4, 223, 'Alan', 222222222, 'COW', 1);
 
 CREATE TABLE Product(
     ProductId INTEGER,
-    ProductionTime TIME,
-    Id INTEGER,
+    ProductionDate DATE,
+    AnimalId INTEGER,
     SIN INTEGER,
     PRIMARY KEY (ProductId),
-    FOREIGN KEY (Id) REFERENCES Animal,
+    FOREIGN KEY (AnimalId) REFERENCES Animal,
     FOREIGN KEY (SIN) REFERENCES Farmer
 );
 
+CREATE SEQUENCE ProductId_seq
+    START 1
+    increment 1
+    CACHE 1;
+ALTER TABLE ProductId_seq OWNER TO yvttysuu;
+
 CREATE TABLE Milk(
     ProductId INTEGER,
-    Id INTEGER,
     Volume INTEGER,
+    Grade CHAR(150),
     PRIMARY KEY (ProductId),
-    FOREIGN KEY (ProductId) REFERENCES Product,
-    FOREIGN KEY (Id) REFERENCES Animal
+    FOREIGN KEY (ProductId) REFERENCES Product
 );
 
 CREATE TABLE Egg(
     ProductId INTEGER,
-    Id INTEGER,
     Quantity INTEGER,
-    Size INTEGER,
+    Size CHAR(150),
     PRIMARY KEY (ProductId),
-    FOREIGN KEY (ProductId) REFERENCES Product,
-    FOREIGN KEY (Id) REFERENCES Animal
+    FOREIGN KEY (ProductId) REFERENCES Product
 );
 
 CREATE TABLE Wool(
     ProductId INTEGER,
-    Id INTEGER,
     Weight INTEGER,
-    Grade INTEGER,
+    Grade CHAR(150),
     PRIMARY KEY (ProductId),
-    FOREIGN KEY (ProductId) REFERENCES Product,
-    FOREIGN KEY (Id) REFERENCES Animal
+    FOREIGN KEY (ProductId) REFERENCES Product
 );
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-27', 1, 222222222);
+INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 3, 'Large');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-27', 2, 222222222);
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 4, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-27', 4, 222222222);
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 30, 'B');
 
 CREATE TABLE MealFeeding(
     Date DATE,
