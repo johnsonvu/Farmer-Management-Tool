@@ -134,15 +134,21 @@ CREATE TABLE Wool(
 );
 
 CREATE TABLE MealFeeding(
-    Time TIME,
+    Date DATE,
     Food CHAR(150),
     Water INTEGER,
-    Id INTEGER,
+    AnimalId INTEGER,
     SIN INTEGER,
-    PRIMARY KEY (Time),
-    FOREIGN KEY (Id) REFERENCES Animal,
+    PRIMARY KEY (Date, AnimalId),
+    FOREIGN KEY (AnimalId) REFERENCES Animal,
     FOREIGN KEY (SIN) REFERENCES Farmer
 );
+
+INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ('2018-02-20', 'Birthday Cake', 2, 1, 222222222);
+INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ('2018-02-21', 'Leftover Cake', 2, 1, 222222222);
+INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ('2018-02-22', 'Chicken food', 2, 1, 222222222);
+INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ('2018-02-20', 'Ice Cream Cake', 1, 3, 222222222);
+INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ('2018-03-27', 'Green Donuts', 1, 3, 222222222);
 
 CREATE TABLE Harvests(
     Id INTEGER,

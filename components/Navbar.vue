@@ -6,6 +6,7 @@
           <img class="logo" src="~/assets/img/happy.png" alt="logo">
         </router-link>
         <nuxt-link to="/users">Users</nuxt-link>
+        <nuxt-link to="/worker">Worker</nuxt-link>
         <a class="github" href="https://github.com/johnsonvu/cpsc304-project-starter" target="_blank" rel="noopener">
           Github
         </a>

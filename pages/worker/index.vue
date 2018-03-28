@@ -3,8 +3,7 @@
     <div class="content">
       <div class="subsection">
         <div style="margin: 25px 10px;">
-          <span class="subsection-title" style="vertical-align: middle;">Users in Database</span>
-          <nuxt-link class="button--grey" style="padding: 5px 20px; text-decoration: none;" to="/users/add">Add User</nuxt-link>
+          <span class="subsection-title" style="vertical-align: middle;">Select an action</span>
         </div>
         <div class="main-button">
           <nuxt-link :to="{ path: '/worker/feed-animals' }">
@@ -12,12 +11,12 @@
           </nuxt-link>
         </div>
         <div class="main-button">
-          <nuxt-link :to="{ path: '/users/harvest-animals' }">
+          <nuxt-link :to="{ path: '/worker/harvest-animals' }">
             Log Harvest Animals
           </nuxt-link>
         </div>
         <div class="main-button">
-          <nuxt-link :to="{ path: '/users/manage-animals' }">
+          <nuxt-link :to="{ path: '/worker/manage-animals' }">
             Manage Animals
           </nuxt-link>
         </div>
@@ -59,6 +58,7 @@
   padding 10px 30px 10px 30px
   position relative
   line-height 20px
+  box-shadow 10px 10px 5px #7f828b;
   .subsection-title
     font-size 26px
     font-weight 500
@@ -70,12 +70,14 @@
     &:hover
       color #515ec4
 
-  div.main-button {
-    align-content center
-    font-size: 3em;
-    padding: 1em;
-    border: solid black 2px;
-    border-radius: 5px;
-    margin: 1em;
-  }
+div.main-button {
+  align-content center
+  font-size: 1.5em;
+  text-align center;
+  padding: 1em;
+  border: solid black 2px;
+  border-radius: 1px;
+  margin: 1em;
+  box-shadow: 2px 2px 10px #7f828b;
+}
 </style>
