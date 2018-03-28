@@ -8,12 +8,13 @@
         <ul style="list-style-type: none; padding: 0; margin: 0;">
           <li v-for="(animal, index) in animals" :key="index" style="padding: 10px 20px; margin: 0 25px; position: relative;">
           {{animal.id}}
-          {{animal.aget}}
+          {{animal.age}}
           {{ animal.weight }}
             {{ animal.name }}
-            {{ animal.sin }}
             {{ animal.species }}
-            {{ animal.pennumber }}
+            {{ animal.location }}
+            {{ animal.firstname }}
+            {{ animal.lastname }}
           </li>
         </ul>
       </div>
@@ -26,7 +27,7 @@ import axios from '~/plugins/axios'
 
 export default {
   async asyncData () {
-    let { data } = await axios.get('/api/animals')
+    let { data } = await axios.get('/api/animals/pen-farmer-list')
     return { animals: data }
   },
 

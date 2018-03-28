@@ -15,9 +15,10 @@ router.get('/animals', function (req, res, next) {
 })
 
 /* GET animals listing with pen and farmer */
-router.get('/animals', function (req, res, next) {
-    const query = `SELECT a.id, a.age, a.weight, a.name, a.species, a.pennumber, f.firstname, f.lastname
+router.get('/animals/pen-farmer-list', function (req, res, next) {
+    const query = `SELECT a.id, a.age, a.weight, a.name, a.species, p.location, f.firstname, f.lastname
         FROM Animal a
+        JOIN Penhouse p ON p.PenNumber = a.PenNumber
         JOIN Farmer f ON f.SIN = a.SIN;`
     connection.query(query, { type: connection.QueryTypes.SELECT })
         .then(animals => {
