@@ -8,7 +8,7 @@
                 <th>Manager</th>
                 <th>Edit</th>
             </tr>
-            <tr v-for="(farmer, index) in farmers" :key="index">
+            <tr v-for="(farmer, index) in workers" :key="index">
                 <td>
                     {{ farmer.sin }}
                 </td>
@@ -38,8 +38,12 @@
 
     export default {
         async asyncData () {
-            let [workers, managers] = [await axios.get('/api/workers'), await axios.get('api/managers')]
-            return { workers: workers, managers: managers }
+            let [workers, managers] = await Promise.all([axios.get('/api/farmers/workers'), axios.get('api/farmers/managers')])
+            console.log(workers.data.list)
+            // let workers = await axios.get('/api/farmers/workers')
+            // let managers = await axios.get('/api/farmers/managers')
+            console.log(workers.data)
+            return { workers: workers.data, managers: managers.data }
         },
 
         head () {
