@@ -79,7 +79,7 @@
             },
             feed (index) {
                 this.animals[index].hasfed = true
-                axios.post('/api/meal-feedings', {
+                axios.post('/api/animals/meal-feedings', {
                     headers:
                         {
                             'Content-Type': 'application/json'

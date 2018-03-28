@@ -22,7 +22,7 @@ router.get('/animals', function (req, res, next) {
         })
 })
 
-router.post('/meal-feedings', bodyParser.json(), function (req, res, next) {
+router.post('/animals/meal-feedings', bodyParser.json(), function (req, res, next) {
     const date = req.body.data.date
     const food = req.body.data.food
     const water = req.body.data.water
@@ -46,5 +46,7 @@ router.post('/meal-feedings', bodyParser.json(), function (req, res, next) {
             res.send('SUCCESS')
         })
 })
+
+
 
 export default router
