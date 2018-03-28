@@ -158,7 +158,7 @@
         color: white;
         padding: 0.5em 2em;
         text-align: center;
-        font-size: 1.2em;
+        font-size: 1em;
         display: inline-block;
         transition-duration: 0.4s;
         cursor: pointer;
