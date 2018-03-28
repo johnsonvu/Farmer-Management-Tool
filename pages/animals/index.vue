@@ -5,18 +5,35 @@
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">Animals in Database</span>
         </div>
-        <ul style="list-style-type: none; padding: 0; margin: 0;">
-          <li v-for="(animal, index) in animals" :key="index" style="padding: 10px 20px; margin: 0 25px; position: relative;">
-          {{animal.id}}
-          {{animal.age}}
-          {{ animal.weight }}
-            {{ animal.name }}
-            {{ animal.species }}
-            {{ animal.location }}
-            {{ animal.firstname }}
-            {{ animal.lastname }}
-          </li>
-        </ul>
+
+        <table class="simple-table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Age</th>
+              <th>Weight</th>
+              <th>Name</th>
+              <th>Species</th>
+              <th>Pen Location</th>
+              <th>Farmer First Name</th>
+              <th>Farmer Last Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template v-for="animal in animals">
+              <tr>
+                <td>{{animal.id}}</td>
+                <td>{{animal.age}}</td>
+                <td>{{ animal.weight }}</td>
+                <td>{{ animal.name }}</td>
+                <td>{{ animal.species }}</td>
+                <td>{{ animal.location }}</td>
+                <td>{{ animal.firstname }}</td>
+                <td>{{ animal.lastname }}</td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -66,4 +83,11 @@ export default {
     &:hover
       color #515ec4
 
+.simple-table
+  border-collapse: collapse
+  width: 100%
+  td, th
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
 </style>
