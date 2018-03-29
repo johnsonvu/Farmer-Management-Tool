@@ -7,6 +7,8 @@
         </router-link>
         <nuxt-link to="/users">Users</nuxt-link>
         <nuxt-link to="/worker">Worker</nuxt-link>
+        <nuxt-link to="/animals">Animals</nuxt-link>
+        <nuxt-link to="/product">Product</nuxt-link>
         <a class="github" href="https://github.com/johnsonvu/cpsc304-project-starter" target="_blank" rel="noopener">
           Github
         </a>

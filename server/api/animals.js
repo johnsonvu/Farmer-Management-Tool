@@ -4,7 +4,48 @@ const bodyParser = require('body-parser')
 
 const router = Router()
 
-router.get('/animals/feed', function (req, res, next) {
+/* GET animals listing. */
+router.get('/animals', function (req, res, next) {
+    const query = 'SELECT * FROM Animal;'
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(animals => {
+            console.log(animals)
+            res.json(animals)
+        })
+})
+
+/* GET animals listing with pen and farmer */
+router.get('/animals/pen-farmer-list', function (req, res, next) {
+    const query = `SELECT a.id, a.age, a.weight, a.name, a.species, p.location, f.firstname, f.lastname
+        FROM Animal a
+        JOIN Penhouse p ON p.PenNumber = a.PenNumber
+        JOIN Farmer f ON f.SIN = a.SIN;`
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(animals => {
+            console.log(animals)
+            res.json(animals)
+        })
+})
+
+router.get('/animals/feed-list', function (req, res, next) {
+    const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, m.food, m.water,
+        CASE WHEN m.date IS NULL
+            THEN false
+            ELSE TRUE
+        END AS hasFed
+        FROM Animal a
+        LEFT JOIN (
+            SELECT * FROM Mealfeeding WHERE date = (NOW() AT TIME ZONE 'US/Pacific')::DATE
+        ) AS m
+        ON a.id = m.AnimalId`
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(animals => {
+            console.log(animals)
+            res.json(animals)
+        })
+})
+
+router.get('/animals/harvest-list', function (req, res, next) {
     const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, m.food, m.water,
         CASE WHEN m.date IS NULL
             THEN false
