@@ -1,3 +1,5 @@
+BEGIN;
+
 DROP TABLE IF EXISTS ExpirationLookup;
 DROP TABLE IF EXISTS AnimalMaintenance;
 DROP TABLE IF EXISTS SheepProduces;
@@ -92,9 +94,16 @@ CREATE SEQUENCE AnimalId_seq
 ALTER TABLE AnimalId_seq OWNER TO yvttysuu;
 
 INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 5, 90, 'Edmond', 222222222, 'CHICKEN', 1);
-INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 3, 110, 'Ian', 222222222, 'SHEEP', 2);
 INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 1, 55, 'Jeffrey', 222222222, 'CHICKEN', 1);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 4, 33, 'Ma', 222222222, 'CHICKEN', 1);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 7, 22, 'Churches', 222222222, 'CHICKEN', 1);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 3, 110, 'Ian', 222222222, 'SHEEP', 2);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 2, 33, 'Lamb', 222222222, 'SHEEP', 2);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 1, 43, 'Ham', 222222222, 'SHEEP', 2);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 3, 110, 'Joe', 222222222, 'SHEEP', 2);
 INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 4, 223, 'Alan', 222222222, 'COW', 1);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 7, 643, 'Jerry', 222222222, 'COW', 1);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 12, 321, 'Tommy', 222222222, 'COW', 1);
 
 CREATE TABLE Product(
     ProductId INTEGER,
@@ -141,18 +150,19 @@ INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('
 INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 3, 'Large');
 
 INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-26', 2, 222222222);
+INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 7, 'Large');
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 1, 222222222);
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 3, 222222222);
 INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 3, 'Large');
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 2, 222222222);
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 5, 222222222);
 INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 4, 'A');
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 4, 222222222);
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 9, 222222222);
 INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 30, 'B');
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-28', 3, 222222222);
-INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 2, 'AA');
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-28', 10, 222222222);
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 2, 'A');
 
 
 CREATE TABLE MealFeeding(
@@ -219,3 +229,5 @@ CREATE TABLE ExpirationLookup(
     ExpiryDate TIMESTAMP WITHOUT TIME ZONE,
     PRIMARY KEY (ProductionTime)
 );
+
+COMMIT;

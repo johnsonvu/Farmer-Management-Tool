@@ -72,7 +72,7 @@
                             <option value="A">A</option>
                             <option value="A+">A+</option>
                         </select>
-                        <span v-show="cow.hasharvested" style="color: forestgreen;">{{ cow.size }}</span>
+                        <span v-show="cow.hasharvested" style="color: forestgreen;">{{ cow.grade }}</span>
                     </td>
                     <td>
                         <input v-show="!cow.hasharvested" type="button" class="feedButton" v-on:click="tryHarvestAnimals(cows, index, 'COW', 'volume', 'grade')" value="Submit" />
@@ -113,7 +113,7 @@
                             <option value="A">A</option>
                             <option value="A+">A+</option>
                         </select>
-                        <span v-show="sheep.hasharvested" style="color: forestgreen;">{{ sheep.size }}</span>
+                        <span v-show="sheep.hasharvested" style="color: forestgreen;">{{ sheep.grade }}</span>
                     </td>
                     <td>
                         <input v-show="!sheep.hasharvested" type="button" class="feedButton" v-on:click="tryHarvestAnimals(sheeps, index, 'SHEEP', 'weight', 'grade')" value="Submit" />

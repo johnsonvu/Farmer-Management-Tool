@@ -72,7 +72,7 @@ router.post('/animals/feed', bodyParser.json(), function (req, res, next) {
 
 router.get('/animals/harvest/chicken', function (req, res, next) {
     const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, g.quantity, g.size,
-        CASE WHEN m.ProductionDate IS NULL
+        CASE WHEN g.quantity IS NULL AND g.size IS NULL
             THEN false
             ELSE TRUE
         END AS hasHarvested
@@ -95,7 +95,7 @@ router.get('/animals/harvest/chicken', function (req, res, next) {
 
 router.get('/animals/harvest/cow', function (req, res, next) {
     const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, g.volume, g.grade,
-        CASE WHEN m.ProductionDate IS NULL
+        CASE WHEN g.volume IS NULL AND g.grade IS NULL
             THEN false
             ELSE TRUE
         END AS hasHarvested
@@ -118,7 +118,7 @@ router.get('/animals/harvest/cow', function (req, res, next) {
 
 router.get('/animals/harvest/sheep', function (req, res, next) {
     const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, g.weight, g.grade,
-        CASE WHEN m.ProductionDate IS NULL
+        CASE WHEN g.weight IS NULL AND g.grade IS NULL
             THEN false
             ELSE TRUE
         END AS hasHarvested
@@ -202,7 +202,7 @@ router.post('/animals/harvest/cow', bodyParser.json(), function (req, res, next)
 })
 
 router.post('/animals/harvest/sheep', bodyParser.json(), function (req, res, next) {
-    const volume = req.body.data.weight
+    const weight = req.body.data.weight
     const grade = req.body.data.grade
     const animalId = req.body.data.animalId
     const sin = req.body.data.sin
@@ -222,7 +222,7 @@ router.post('/animals/harvest/sheep', bodyParser.json(), function (req, res, nex
                 {
                     type: connection.QueryTypes.INSERT,
                     replacements: {
-                        volume: volume,
+                        weight: weight,
                         grade: grade
                     }
                 })
