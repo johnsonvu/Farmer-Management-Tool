@@ -7,7 +7,7 @@
         Farmer's Management Project
       </h1>
       <div class="links">
-        <nuxt-link class="button--grey link" style="margin-left: 15px;" to="/users">View Users</nuxt-link>
+        <nuxt-link class="button--grey link" style="margin-left: 15px;" to="/users">Login</nuxt-link>
       </div>
     </div>
   </section>
