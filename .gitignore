@@ -17,7 +17,7 @@ build
 env_setup
 
 #Plz dont commit
-static
+static/*
 package.json
 package-lock.json
 .idea
