@@ -136,10 +136,10 @@ CREATE TABLE Wool(
     FOREIGN KEY (ProductId) REFERENCES Product
 );
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-27', 1, 222222222);
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-25', 1, 222222222);
 INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 3, 'Large');
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-27', 2, 222222222);
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-26', 2, 222222222);
 INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 4, 'A');
 
 INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-27', 4, 222222222);
