@@ -20,7 +20,7 @@
                     <thead>
                     <tr>
                         <th>Species</th>
-                        <th>Highest Yield</th>
+                        <th>Average Yield</th>
                     </tr>
                     </thead>
                     <tbody>
