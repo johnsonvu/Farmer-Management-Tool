@@ -1,42 +1,40 @@
 <template>
-  <section class="animals-view">
-    <div class="content">
-      <div class="subsection">
-        <div style="margin: 25px 10px;">
-          <span class="subsection-title" style="vertical-align: middle;">Animals in Database</span>
-        </div>
-
+  <div>
         <table class="simple-table">
           <thead>
             <tr>
               <th>Id</th>
+              <th>Species</th>
+              <th>Name</th>
               <th>Age</th>
               <th>Weight</th>
-              <th>Name</th>
-              <th>Species</th>
               <th>Pen Location</th>
-              <th>Farmer First Name</th>
-              <th>Farmer Last Name</th>
+              <th>Assigned Farmer</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            <template v-for="animal in animals">
-              <tr>
+            
+              <tr v-for="(animal, index) in animals" :key="animal.id">
                 <td>{{animal.id}}</td>
+                <td>{{ animal.species }}</td>
+                <td>{{ animal.name }}</td>
                 <td>{{animal.age}}</td>
                 <td>{{ animal.weight }}</td>
-                <td>{{ animal.name }}</td>
-                <td>{{ animal.species }}</td>
                 <td>{{ animal.location }}</td>
-                <td>{{ animal.firstname }}</td>
-                <td>{{ animal.lastname }}</td>
+                <td>{{ animal.firstname + ' ' + animal.lastname}}</td>
+                <td>
+                    <input v-show="true" type="button" class="actionButton updateButton" v-on:click="tryUpdate(index)" value="Update" />
+                </td>
+                <td>
+                    <input v-show="true" type="button" class="actionButton deleteButton" v-on:click="tryDelete(index)" value="Delete" />
+                </td>
               </tr>
-            </template>
+            
           </tbody>
         </table>
       </div>
-    </div>
-  </section>
 </template>
 
 <script>
@@ -60,10 +58,14 @@ export default {
         },
         update (index) {
 
+        },
+        tryDelete (index) {
+
+        },
+        delete (index) {
+
         }
-
     }
-
 }
 </script>
 
@@ -94,11 +96,49 @@ export default {
     &:hover
       color #515ec4
 
-.simple-table
-  border-collapse: collapse
-  width: 100%
-  td, th
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
+table {
+        width: 100%;
+        height: 100%
+        border-style ridge
+        padding: 2em;
+        cell-padding: 1em;
+        text-align left
+        margin-top: 1em;
+        margin-bottom: 1em;
+        box-shadow: 2px 2px 10px #7f828b;
+    }
+tr.headerRow th {
+    padding-bottom: 1em;
+}
+
+.actionButton {
+        padding: 0.5em 1.5em;
+        text-align: center;
+        font-size: 1em;
+        display: inline-block;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        border-radius: 2px;
+    }
+
+.updateButton {
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+}
+
+.updateButton:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+.deleteButton {
+    background-color: white;
+    color: black;
+    border: 2px solid #D9534F;
+}
+
+.deleteButton:hover {
+    background-color: #D9534F;
+    color: white;
+}
 </style>
