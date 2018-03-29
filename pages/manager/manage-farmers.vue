@@ -97,7 +97,7 @@
         methods: {
             trySaveWorker (farmer) {
                 if (farmer.firstname === '' || farmer.lastname === '' || farmer.manager_sin === '') {
-                    alert(`Invalid data! ${farmer.firstname} ${farmer.lastname} could not be saved! Please ensure all fields are valid and try again.`)
+                    alert(`Invalid data! Farmer ${farmer.firstname} ${farmer.lastname} could not be saved! Please ensure all fields are valid and try again.`)
                 } else {
                     this.saveWorker(farmer)
                 }
@@ -114,6 +114,29 @@
                             'firstname': farmer.firstname,
                             'lastname': farmer.lastname,
                             'manager_sin': farmer.manager_sin
+                        }})
+                    .then(response => {
+                        farmer.editMode = false
+                    })
+            },
+            trySaveManager (farmer) {
+                if (farmer.firstname === '' || farmer.lastname === '') {
+                    alert(`Invalid data! Farmer ${farmer.firstname} ${farmer.lastname} could not be saved! Please ensure all fields are valid and try again.`)
+                } else {
+                    this.saveManager(farmer)
+                }
+            },
+            saveManager (farmer) {
+                axios.put('/api/farmers/managers', {
+                    headers:
+                        {
+                            'Content-Type': 'application/json'
+                        },
+                    data:
+                        {
+                            'sin': farmer.sin,
+                            'firstname': farmer.firstname,
+                            'lastname': farmer.lastname
                         }})
                     .then(response => {
                         farmer.editMode = false

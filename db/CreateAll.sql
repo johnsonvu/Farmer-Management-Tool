@@ -49,7 +49,7 @@ CREATE TABLE Farmer(
 INSERT INTO Farmer (SIN, FirstName, LastName) VALUES (111111111, 'Johnson', 'Vu');
 INSERT INTO Farmer (SIN, FirstName, LastName) VALUES (222222222, 'Justin', 'Kwan');
 
-CREATE TABLE Users(
+CREATE TABLE Users (
     userid SERIAL,
 	username VARCHAR(32) UNIQUE NOT NULL,
 	password TEXT NOT NULL,
@@ -67,12 +67,13 @@ CREATE TABLE HasHealthInsurance (
     PolicyNumber INTEGER,
     StartingDate DATE,
     PRIMARY KEY (SIN, PolicyNumber),
-    FOREIGN KEY (SIN) REFERENCES Farmer
+    FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE CASCADE
 );
 
 CREATE TABLE Manager(
     SIN INTEGER,
-    PRIMARY KEY (SIN)
+    PRIMARY KEY (SIN),
+    FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE CASCADE
 );
 
 INSERT INTO Manager (SIN) VALUES (111111111);
@@ -81,7 +82,7 @@ CREATE TABLE Worker(
     SIN INTEGER,
     Manager_SIN INTEGER,
     PRIMARY KEY (SIN),
-    FOREIGN KEY (SIN) REFERENCES Farmer,
+    FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE CASCADE,
     FOREIGN KEY (Manager_SIN) REFERENCES Manager
 );
 
@@ -97,7 +98,7 @@ CREATE TABLE Animal(
     PenNumber INTEGER,
     PRIMARY KEY (Id),
     FOREIGN KEY (PenNumber) REFERENCES Penhouse,
-    FOREIGN KEY (SIN) REFERENCES Farmer
+    FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE SET NULL
 );
 
 CREATE SEQUENCE AnimalId_seq
@@ -125,7 +126,7 @@ CREATE TABLE Product(
     SIN INTEGER,
     PRIMARY KEY (ProductId),
     FOREIGN KEY (AnimalId) REFERENCES Animal,
-    FOREIGN KEY (SIN) REFERENCES Farmer
+    FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE SET NULL
 );
 
 CREATE SEQUENCE ProductId_seq
@@ -186,7 +187,7 @@ CREATE TABLE MealFeeding(
     SIN INTEGER,
     PRIMARY KEY (Date, AnimalId),
     FOREIGN KEY (AnimalId) REFERENCES Animal,
-    FOREIGN KEY (SIN) REFERENCES Farmer
+    FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE SET NULL
 );
 
 INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ('2018-02-20', 'Birthday Cake', 2, 1, 222222222);
@@ -234,7 +235,7 @@ CREATE TABLE AnimalMaintenance(
     SIN INTEGER,
     Id INTEGER,
     PRIMARY KEY (Id),
-    FOREIGN KEY (SIN) REFERENCES Farmer
+    FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE SET NULL
 );
 
 CREATE TABLE ExpirationLookup(

@@ -7,7 +7,7 @@
         </router-link>
         <nuxt-link to="/users">Users</nuxt-link>
         <nuxt-link to="/worker">Worker</nuxt-link>
-        <nuxt-link to="/animals">Animals</nuxt-link>
+        <nuxt-link to="/animals">Animals</nuxt-link>gt
         <nuxt-link to="/manager">Manager</nuxt-link>
         <nuxt-link to="/product">Product</nuxt-link>
         <nuxt-link to="/stats">Statistics</nuxt-link>

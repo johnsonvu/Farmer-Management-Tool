@@ -59,7 +59,32 @@ router.put('/farmers/workers', bodyParser.json(), function (req, res, next) {
                 })
                 .then(result => {
                     res.send('SUCCESS')
-            })
+                })
+        })
+        .catch(err => {
+            console.log('Error is: ')
+            console.log(err)
+        })
+})
+
+router.put('/farmers/managers', bodyParser.json(), function (req, res, next) {
+    const sin = req.body.data.sin
+    const firstname = req.body.data.firstname
+    const lastname = req.body.data.lastname
+
+    const query = 'UPDATE Farmer SET firstname = :firstname, lastname = :lastname WHERE sin = :sin;'
+
+    connection.query(query,
+        {
+            type: connection.QueryTypes.UPDATE,
+            replacements: {
+                sin: sin,
+                firstname: firstname,
+                lastname: lastname
+            }
+        })
+        .then(result => {
+            res.send('SUCCESS')
         })
         .catch(err => {
             console.log('Error is: ')
