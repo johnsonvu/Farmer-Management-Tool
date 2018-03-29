@@ -10,26 +10,84 @@
         <input v-model="toDate" placeholder="toDate (yyyy-mm-dd)">
         <input type="button" v-on:click="update(fromDate, toDate)" value="Submit" />
 
+        <div>Eggs</div>
         <table class="simple-table">
           <thead>
             <tr>
-              <th>Id</th>
-              <th>Time</th>
+              <th>Product Id</th>
               <th>Animal Id</th>
+              <th>Quantity</th>
+              <th>Size</th>
+              <th>Production Date</th>
               <th>Farmer SIN</th>
           </tr>
           </thead>
           <tbody>
-            <template v-for="product in products">
+            <template v-for="e in eggs">
               <tr>
-                <td>{{ product.productid}}</td>
-                <td>{{ product.productiondate}}</td>
-                <td>{{ product.animalid }}</td>
-                <td>{{ product.sin }}</td>
+                <td>{{ e.productid}}</td>
+                <td>{{ e.animalid}}</td>
+                <td>{{ e.quantity }}</td>
+                <td>{{ e.size }}</td>
+                <td>{{ e.productiondate }}</td>
+                <td>{{ e.sin }}</td>
             </tr>
             </template>
           </tbody>
         </table>
+        Average Quantity: {{ eggsavg[0].avg }}
+        <div>Milk</div>
+        <table class="simple-table">
+          <thead>
+            <tr>
+              <th>Product Id</th>
+              <th>Animal Id</th>
+              <th>Volume</th>
+              <th>Grade</th>
+              <th>Production Date</th>
+              <th>Farmer SIN</th>
+          </tr>
+          </thead>
+          <tbody>
+            <template v-for="m in milk">
+              <tr>
+                <td>{{ m.productid}}</td>
+                <td>{{ m.animalid}}</td>
+                <td>{{ m.volume }}</td>
+                <td>{{ m.grade }}</td>
+                <td>{{ m.productiondate }}</td>
+                <td>{{ m.sin }}</td>
+            </tr>
+            </template>
+          </tbody>
+        </table>
+        Average Volume: {{ milkavg[0].avg }}
+        <div>Wool</div>
+        <table class="simple-table">
+          <thead>
+            <tr>
+              <th>Product Id</th>
+              <th>Animal Id</th>
+              <th>Weight</th>
+              <th>Grade</th>
+              <th>Production Date</th>
+              <th>Farmer SIN</th>
+          </tr>
+          </thead>
+          <tbody>
+            <template v-for="w in wool">
+              <tr>
+                <td>{{ w.productid}}</td>
+                <td>{{ w.animalid}}</td>
+                <td>{{ w.weight }}</td>
+                <td>{{ w.grade }}</td>
+                <td>{{ w.productiondate }}</td>
+                <td>{{ w.sin }}</td>
+            </tr>
+            </template>
+          </tbody>
+        </table>
+        Average Weight: {{ woolavg[0].avg }}
       </div>
     </div>
   </section>
@@ -40,8 +98,19 @@ import axios from '~/plugins/axios'
 
 export default {
   async asyncData () {
-    let { data } = await axios.get('/api/products/list')
-    return { products: data }
+    let [eggs, milk, wool] = await Promise.all([axios.get('/api/products/eggs'),
+                                                axios.get('/api/products/milk'),
+                                                axios.get('/api/products/wool')])
+   let [eggsavg, milkavg, woolavg] = await Promise.all([axios.get('/api/products/eggs/average'),
+                                                        axios.get('/api/products/milk/average'),
+                                                        axios.get('/api/products/wool/average')])
+    return { eggs: eggs.data,
+             milk: milk.data,
+             wool: wool.data,
+             eggsavg: eggsavg.data,
+             milkavg: milkavg.data,
+             woolavg: woolavg.data
+           }
   },
 
   head () {
@@ -55,14 +124,32 @@ export default {
       fromDate: '',
       toDate: '',
       message: '',
-      products: []
+      eggs: [],
+      milk: [],
+      wool: [],
+      eggsavg: '',
+      milkavg: '',
+      woolavg: ''
     }
   },
 
   methods: {
     async update (fromDate, toDate) {
-      let { data } = await axios.get('/api/products/list/range' + '?fromDate=' + fromDate + '&toDate=' + toDate)
-      this.products = data
+      let [eggs, milk, wool] = await Promise.all([axios.get('/api/products/eggs/range' + '?fromDate=' + fromDate + '&toDate=' + toDate),
+                                                  axios.get('/api/products/milk/range' + '?fromDate=' + fromDate + '&toDate=' + toDate),
+                                                  axios.get('/api/products/wool/range' + '?fromDate=' + fromDate + '&toDate=' + toDate)])
+      // let { data } = await axios.get('/api/products/eggs/range' + '?fromDate=' + fromDate + '&toDate=' + toDate)
+      // let { data2 } = await axios.get('/api/products/milk/range' + '?fromDate=' + fromDate + '&toDate=' + toDate)
+      // let { data3 } = await axios.get('/api/products/wool/range' + '?fromDate=' + fromDate + '&toDate=' + toDate)
+      this.eggs = eggs.data
+      this.milk = milk.data
+      this.wool = wool.data
+      let [eggsavg, milkavg, woolavg] = await Promise.all([axios.get('/api/products/eggs/range/average' + '?fromDate=' + fromDate + '&toDate=' + toDate),
+                                                           axios.get('/api/products/milk/range/average' + '?fromDate=' + fromDate + '&toDate=' + toDate),
+                                                           axios.get('/api/products/wool/range/average' + '?fromDate=' + fromDate + '&toDate=' + toDate)])
+      this.eggsavg = eggsavg.data
+      this.milkavg = milkavg.data
+      this.woolavg = woolavg.data
     }
   }
 }
