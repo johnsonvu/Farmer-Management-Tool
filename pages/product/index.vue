@@ -10,7 +10,7 @@
         <input v-model="toDate" placeholder="toDate (yyyy-mm-dd)">
         <input type="button" v-on:click="update(fromDate, toDate)" value="Submit" />
 
-        <div>Eggs</div>
+        <h1>Eggs</h1>
         <table class="simple-table">
           <thead>
             <tr>
@@ -35,8 +35,9 @@
             </template>
           </tbody>
         </table>
-        Average Quantity: {{ eggsavg[0].avg }}
-        <div>Milk</div>
+        Average Quantity: {{ eggsavg[0].avg }}<br>
+        Total # of Products: {{ eggscount[0].count }}
+        <h1>Milk</h1>
         <table class="simple-table">
           <thead>
             <tr>
@@ -61,8 +62,9 @@
             </template>
           </tbody>
         </table>
-        Average Volume: {{ milkavg[0].avg }}
-        <div>Wool</div>
+        Average Volume: {{ milkavg[0].avg }}<br>
+        Total # of Products: {{ milkcount[0].count }}
+        <h1>Wool</h1>
         <table class="simple-table">
           <thead>
             <tr>
@@ -87,7 +89,8 @@
             </template>
           </tbody>
         </table>
-        Average Weight: {{ woolavg[0].avg }}
+        Average Weight: {{ woolavg[0].avg }}<br>
+        Total # of Products: {{ woolcount[0].count }}
       </div>
     </div>
   </section>
@@ -104,12 +107,18 @@ export default {
    let [eggsavg, milkavg, woolavg] = await Promise.all([axios.get('/api/products/eggs/average'),
                                                         axios.get('/api/products/milk/average'),
                                                         axios.get('/api/products/wool/average')])
+   let [eggscount, milkcount, woolcount] = await Promise.all([axios.get('/api/products/eggs/count'),
+                                                              axios.get('/api/products/milk/count'),
+                                                              axios.get('/api/products/wool/count')])
     return { eggs: eggs.data,
              milk: milk.data,
              wool: wool.data,
              eggsavg: eggsavg.data,
              milkavg: milkavg.data,
-             woolavg: woolavg.data
+             woolavg: woolavg.data,
+             eggscount: eggscount.data,
+             milkcount: milkcount.data,
+             woolcount: woolcount.data
            }
   },
 
@@ -129,7 +138,10 @@ export default {
       wool: [],
       eggsavg: '',
       milkavg: '',
-      woolavg: ''
+      woolavg: '',
+      eggscount: '',
+      milkcount: '',
+      woolcount: ''
     }
   },
 
@@ -150,6 +162,12 @@ export default {
       this.eggsavg = eggsavg.data
       this.milkavg = milkavg.data
       this.woolavg = woolavg.data
+      let [eggscount, milkcount, woolcount] = await Promise.all([axios.get('/api/products/eggs/range/count' + '?fromDate=' + fromDate + '&toDate=' + toDate),
+                                                                axios.get('/api/products/milk/range/count' + '?fromDate=' + fromDate + '&toDate=' + toDate),
+                                                                axios.get('/api/products/wool/range/count' + '?fromDate=' + fromDate + '&toDate=' + toDate)])
+      this.eggscount = eggscount.data
+      this.milkcount = milkcount.data
+      this.woolcount = woolcount.data
     }
   }
 }
