@@ -1,35 +1,32 @@
 <template>
-  <section class="animals-view">
+  <section class="main-view">
     <div class="content">
       <div class="subsection">
         <div style="margin: 25px 10px;">
-          <span class="subsection-title" style="vertical-align: middle;">Animals in Database</span>
+          <span class="subsection-title" style="vertical-align: middle;">Statistics</span>
+        </div>
+
+        <div>
+          View the
+          <select name="Performance" onchange="updateCategories(this.options[this.selectedIndex].value)" >
+            <option v-model="optionVal" value="MAX">best</option>
+            <option v-model="optionVal" value="MIN">lowest</option>
+          </select>
+          performing animal of each species:
         </div>
 
         <table class="simple-table">
           <thead>
             <tr>
-              <th>Id</th>
-              <th>Age</th>
-              <th>Weight</th>
-              <th>Name</th>
               <th>Species</th>
-              <th>Pen Location</th>
-              <th>Farmer First Name</th>
-              <th>Farmer Last Name</th>
+              <th>Highest Yield</th>
             </tr>
           </thead>
           <tbody>
-            <template v-for="animal in animals">
+            <template v-for="category in categories">
               <tr>
-                <td>{{animal.id}}</td>
-                <td>{{animal.age}}</td>
-                <td>{{ animal.weight }}</td>
-                <td>{{ animal.name }}</td>
-                <td>{{ animal.species }}</td>
-                <td>{{ animal.location }}</td>
-                <td>{{ animal.firstname }}</td>
-                <td>{{ animal.lastname }}</td>
+                <td>{{category.species}}</td>
+                <td>{{category.max}}</td>
               </tr>
             </template>
           </tbody>
@@ -43,21 +40,29 @@
 import axios from '~/plugins/axios'
 
 export default {
-  async asyncData () {
-    let { data } = await axios.get('/api/animals/pen-farmer-list')
-    return { animals: data }
-  },
+    async asyncData () {
+        let { data } = await axios.get('/api/stats/animal/performance/max')
+        return { categories: data }
+    },
 
-  head () {
-    return {
-      title: 'Animals'
+    head () {
+        return {
+            title: 'Statistics',
+            optionVal: 'MAX',
+            categories: []
+        }
+    },
+    methods: {
+        updateCategories (option) {
+            let { data } = axios.get('/api/stats/animal/performance/' + option)
+            return { categories: data }
+        }
     }
-  }
 }
 </script>
 
 <style lang="stylus" scoped>
-.animals-view
+.main-view
   padding-top 0
 
 .content

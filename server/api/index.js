@@ -5,6 +5,7 @@ import animals from './animals'
 import pens from './pens'
 import farmers from './farmers'
 import products from './products'
+import stats from './stats'
 
 const router = Router()
 
@@ -14,5 +15,6 @@ router.use(animals)
 router.use(pens)
 router.use(farmers)
 router.use(products)
+router.use(stats)
 
 export default router
