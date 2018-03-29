@@ -87,20 +87,21 @@ router.post('/animals/feed', bodyParser.json(), function (req, res, next) {
 })
 
 router.get('/animals/harvest/chicken', function (req, res, next) {
-    const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, g.quantity, g.size,
-        CASE WHEN m.ProductionDate IS NULL
+    const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, m.quantity, m.size,
+        CASE WHEN m.quantity IS NULL AND m.size IS NULL
             THEN false
             ELSE TRUE
         END AS hasHarvested
         FROM Animal a
         LEFT JOIN (
-            SELECT * FROM Product p WHERE ProductionDate = (NOW() AT TIME ZONE 'US/Pacific')::DATE
+            SELECT * FROM Product p
+            INNER JOIN (
+                SELECT * FROM Egg
+            ) AS g
+            ON p.ProductId = g.ProductId 
+            WHERE ProductionDate = (NOW() AT TIME ZONE 'US/Pacific')::DATE
         ) AS m
         ON a.id = m.AnimalId
-        LEFT JOIN (
-            SELECT * FROM Egg
-        ) AS g
-        ON m.ProductId = g.ProductId 
         WHERE a.species = 'CHICKEN'`
     connection.query(query, { type: connection.QueryTypes.SELECT })
         .then(animals => {
@@ -110,20 +111,21 @@ router.get('/animals/harvest/chicken', function (req, res, next) {
 })
 
 router.get('/animals/harvest/cow', function (req, res, next) {
-    const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, g.volume, g.grade,
-        CASE WHEN m.ProductionDate IS NULL
+    const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, m.volume, m.grade,
+        CASE WHEN m.volume IS NULL AND m.grade IS NULL
             THEN false
             ELSE TRUE
         END AS hasHarvested
         FROM Animal a
         LEFT JOIN (
-            SELECT * FROM Product p WHERE ProductionDate = (NOW() AT TIME ZONE 'US/Pacific')::DATE
+            SELECT * FROM Product p
+            INNER JOIN (
+                SELECT * FROM Milk
+            ) AS g
+            ON p.ProductId = g.ProductId 
+            WHERE ProductionDate = (NOW() AT TIME ZONE 'US/Pacific')::DATE
         ) AS m
         ON a.id = m.AnimalId
-        LEFT JOIN (
-            SELECT * FROM Milk
-        ) AS g
-        ON m.ProductId = g.ProductId 
         WHERE a.species = 'COW'`
     connection.query(query, { type: connection.QueryTypes.SELECT })
         .then(animals => {
@@ -133,20 +135,21 @@ router.get('/animals/harvest/cow', function (req, res, next) {
 })
 
 router.get('/animals/harvest/sheep', function (req, res, next) {
-    const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, g.weight, g.grade,
-        CASE WHEN m.ProductionDate IS NULL
+    const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, m.weight, m.grade,
+        CASE WHEN m.weight IS NULL AND m.grade IS NULL
             THEN false
             ELSE TRUE
         END AS hasHarvested
         FROM Animal a
         LEFT JOIN (
-            SELECT * FROM Product p WHERE ProductionDate = (NOW() AT TIME ZONE 'US/Pacific')::DATE
+            SELECT * FROM Product p
+            INNER JOIN (
+                SELECT * FROM Wool
+            ) AS g
+            ON p.ProductId = g.ProductId 
+            WHERE ProductionDate = (NOW() AT TIME ZONE 'US/Pacific')::DATE
         ) AS m
         ON a.id = m.AnimalId
-        LEFT JOIN (
-            SELECT * FROM Wool
-        ) AS g
-        ON m.ProductId = g.ProductId 
         WHERE a.species = 'SHEEP'`
     connection.query(query, { type: connection.QueryTypes.SELECT })
         .then(animals => {
@@ -218,7 +221,7 @@ router.post('/animals/harvest/cow', bodyParser.json(), function (req, res, next)
 })
 
 router.post('/animals/harvest/sheep', bodyParser.json(), function (req, res, next) {
-    const volume = req.body.data.weight
+    const weight = req.body.data.weight
     const grade = req.body.data.grade
     const animalId = req.body.data.animalId
     const sin = req.body.data.sin
@@ -238,7 +241,7 @@ router.post('/animals/harvest/sheep', bodyParser.json(), function (req, res, nex
                 {
                     type: connection.QueryTypes.INSERT,
                     replacements: {
-                        volume: volume,
+                        weight: weight,
                         grade: grade
                     }
                 })
