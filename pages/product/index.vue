@@ -6,6 +6,10 @@
           <span class="subsection-title" style="vertical-align: middle;">Product</span>
         </div>
 
+        <input v-model="fromDate" placeholder="fromDate (yyyy-mm-dd)">
+        <input v-model="toDate" placeholder="toDate (yyyy-mm-dd)">
+        <input type="button" v-on:click="update(fromDate, toDate)" value="Submit" />
+
         <table class="simple-table">
           <thead>
             <tr>
@@ -43,6 +47,22 @@ export default {
   head () {
     return {
       title: 'Products'
+    }
+  },
+
+  data () {
+    return {
+      fromDate: '',
+      toDate: '',
+      message: '',
+      products: []
+    }
+  },
+
+  methods: {
+    async update (fromDate, toDate) {
+      let { data } = await axios.get('/api/products/list/range' + '?fromDate=' + fromDate + '&toDate=' + toDate)
+      this.products = data
     }
   }
 }

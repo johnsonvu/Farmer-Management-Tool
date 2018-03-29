@@ -24,8 +24,22 @@ router.get('/products/list', function (req, res, next) {
         })
 })
 
+router.get('/products/list/range', function (req, res, next) {
+    const fromDate = req.query.fromDate
+    const toDate = req.query.toDate
 
+    console.log(fromDate);
+    console.log(toDate);
 
+    const query = `SELECT p.productid, p.productiondate, p.animalid, p.sin
+        FROM Product p
+        WHERE p.productiondate >= '${fromDate}' AND p.productiondate <= '${toDate}';`
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(products => {
+            console.log(products)
+            res.json(products)
+        })
+})
 
 
 
