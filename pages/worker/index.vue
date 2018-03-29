@@ -20,6 +20,11 @@
             Manage Animals
           </nuxt-link>
         </div>
+        <div class="main-button">
+          <nuxt-link :to="{ path: '/animals' }">
+            View Animals
+          </nuxt-link>
+        </div>
       </div>
     </div>
   </section>

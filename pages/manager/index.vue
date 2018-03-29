@@ -11,13 +11,28 @@
                     </nuxt-link>
                 </div>
                 <div class="main-button">
+                    <nuxt-link :to="{ path: '/worker/manage-animals' }">
+                        Manage Animals
+                    </nuxt-link>
+                </div>
+                <div class="main-button">
+                    <nuxt-link :to="{ path: '/stats' }">
+                        View Statistics
+                    </nuxt-link>
+                </div>
+                <div class="main-button">
+                    <nuxt-link :to="{ path: '/worker/feed-animals' }">
+                        Log Feed Animals
+                    </nuxt-link>
+                </div>
+                <div class="main-button">
                     <nuxt-link :to="{ path: '/worker/harvest-animals' }">
                         Log Harvest Animals
                     </nuxt-link>
                 </div>
                 <div class="main-button">
-                    <nuxt-link :to="{ path: '/worker/manage-animals' }">
-                        Manage Animals
+                    <nuxt-link :to="{ path: '/animals' }">
+                        View Animals
                     </nuxt-link>
                 </div>
             </div>
@@ -45,7 +60,6 @@
         padding 10px 30px 10px 30px
         position relative
         line-height 20px
-        box-shadow 10px 10px 5px #7f828b;
         .subsection-title
             font-size 26px
             font-weight 500
