@@ -29,7 +29,7 @@ router.get('/stats/animal/performance/:option', function (req, res, next) {
             GROUP BY a.id
             ORDER BY species
         )
-        SELECT species, ` + option + `(unit_avg) 
+        SELECT species, ` + option + `(unit_avg) AS unit
         FROM production_avg 
         GROUP BY species`
     connection.query(query, { type: connection.QueryTypes.SELECT })
