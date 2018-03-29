@@ -26,6 +26,13 @@
 </template>
 
 <script>
+    export default {
+        head () {
+            return {
+                title: 'Worker'
+            }
+        }
+    }
 </script>
 
 <style lang="stylus" scoped>
@@ -44,7 +51,6 @@
   padding 10px 30px 10px 30px
   position relative
   line-height 20px
-  box-shadow 10px 10px 5px #7f828b;
   .subsection-title
     font-size 26px
     font-weight 500

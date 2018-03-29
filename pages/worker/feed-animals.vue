@@ -49,7 +49,7 @@
 
     export default {
         async asyncData () {
-            let { data } = await axios.get('/api/animals/feed-list')
+            let { data } = await axios.get('/api/animals/feed')
             console.log(data)
             return { animals: data }
         },
@@ -69,11 +69,12 @@
 
         methods: {
             tryFeed (index) {
-                if (this.animals[index].food === '' || this.animals[index].food === undefined) {
+                if (this.animals[index].food === '' || this.animals[index].food === undefined || this.animals[index].food === null) {
                     alert('Please enter food type before submitting')
-                } else if (this.animals[index].water === '' || this.animals[index].water === undefined) {
+                } else if (this.animals[index].water === '' || this.animals[index].water === undefined || this.animals[index].water === null) {
                     alert('Please enter litres of water before submitting')
                 } else {
+                    console.log(index)
                     this.feed(index)
                 }
             },
@@ -152,6 +153,8 @@
     tr.headerRow th {
         padding-bottom: 1em;
     }
+    tr:nth-child(even){background-color: #f2f2f2};
+
     .feedButton {
         background-color: #4CAF50; /* Green */
         border: none;

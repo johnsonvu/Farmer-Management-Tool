@@ -67,6 +67,15 @@ router.put('/farmers/workers', bodyParser.json(), function (req, res, next) {
         })
 })
 
+router.get('/farmers/all', function (req, res, next){
+    const query = 'SELECT * FROM Farmer;'
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(farmers => {
+            console.log(farmers)
+            res.json(farmers)
+        })
+})
+
 // router.post('/animals/feed', bodyParser.json(), function (req, res, next) {
 //     const date = req.body.data.date
 //     const food = req.body.data.food
