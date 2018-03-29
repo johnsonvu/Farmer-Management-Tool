@@ -26,7 +26,8 @@ CREATE TABLE Penhouse(
     PenNumber INTEGER,
     Location VARCHAR(100),
     Size INTEGER,
-    PRIMARY KEY (PenNumber)
+    PRIMARY KEY (PenNumber),
+    CONSTRAINT CHK_Size CHECK (Size>0)
 );
 
 CREATE SEQUENCE PenNumber_seq
@@ -38,12 +39,14 @@ ALTER TABLE PenNumber_seq OWNER TO yvttysuu;
 INSERT INTO Penhouse (PenNumber, Location, Size) VALUES (nextval('PenNumber_seq'), 'Chicken Coop', 8);
 INSERT INTO Penhouse (PenNumber, Location, Size) VALUES (nextval('PenNumber_seq'), 'Sheep Barn', 6);
 
-
 CREATE TABLE Farmer(
-    SIN INTEGER,
+    SIN CHAR(9),
     FirstName VARCHAR(150),
     LastName VARCHAR(150),
-    PRIMARY KEY (SIN)
+    PRIMARY KEY (SIN),
+    CONSTRAINT CHK_SIN CHECK (SIN ~ $$[0-9]{9}$$),
+    CONSTRAINT CHK_FirstName CHECK (FirstName ~ $$[a-zA-Z]+$$),
+    CONSTRAINT CHK_LastName CHECK (LastName ~ $$[a-zA-Z]+$$)
 );
 
 INSERT INTO Farmer (SIN, FirstName, LastName) VALUES (111111111, 'Johnson', 'Vu');
@@ -54,7 +57,7 @@ CREATE TABLE Users (
 	username VARCHAR(32) UNIQUE NOT NULL,
 	password TEXT NOT NULL,
 	isActive BOOLEAN NOT NULL DEFAULT TRUE,
-	SIN INTEGER,
+	SIN CHAR(9),
 	PRIMARY KEY (userid),
 	FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE CASCADE
 );
@@ -63,7 +66,7 @@ INSERT INTO Users (USERNAME, PASSWORD, SIN) VALUES ('jvu', 'test', 111111111);
 INSERT INTO Users (USERNAME, PASSWORD, SIN) VALUES ('jkw', '1234', 222222222);
 
 CREATE TABLE HasHealthInsurance (
-    SIN INTEGER,
+    SIN CHAR(9),
     PolicyNumber INTEGER,
     StartingDate DATE,
     PRIMARY KEY (SIN, PolicyNumber),
@@ -71,7 +74,7 @@ CREATE TABLE HasHealthInsurance (
 );
 
 CREATE TABLE Manager(
-    SIN INTEGER,
+    SIN CHAR(9),
     PRIMARY KEY (SIN),
     FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE CASCADE
 );
@@ -79,8 +82,8 @@ CREATE TABLE Manager(
 INSERT INTO Manager (SIN) VALUES (111111111);
 
 CREATE TABLE Worker(
-    SIN INTEGER,
-    Manager_SIN INTEGER,
+    SIN CHAR(9),
+    Manager_SIN CHAR(9),
     PRIMARY KEY (SIN),
     FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE CASCADE,
     FOREIGN KEY (Manager_SIN) REFERENCES Manager
@@ -93,12 +96,16 @@ CREATE TABLE Animal(
     Age INTEGER,
     Weight INTEGER,
     Name VARCHAR(150),
-    SIN INTEGER,
+    SIN CHAR(9),
     Species VARCHAR(150),
     PenNumber INTEGER,
     PRIMARY KEY (Id),
     FOREIGN KEY (PenNumber) REFERENCES Penhouse,
-    FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE SET NULL
+    FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE SET NULL,
+    CONSTRAINT CHK_Age CHECK (Age>0),
+    CONSTRAINT CHK_Weight CHECK (Weight>0),
+    CONSTRAINT CHK_Name CHECK (Name ~ $$[a-zA-Z]+$$),
+    CONSTRAINT CHK_Species CHECK (Species ~ $$[a-zA-Z]+$$)
 );
 
 CREATE SEQUENCE AnimalId_seq
@@ -123,7 +130,7 @@ CREATE TABLE Product(
     ProductId INTEGER,
     ProductionDate DATE,
     AnimalId INTEGER,
-    SIN INTEGER,
+    SIN CHAR(9),
     PRIMARY KEY (ProductId),
     FOREIGN KEY (AnimalId) REFERENCES Animal,
     FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE SET NULL
@@ -140,7 +147,8 @@ CREATE TABLE Milk(
     Volume INTEGER,
     Grade VARCHAR(150),
     PRIMARY KEY (ProductId),
-    FOREIGN KEY (ProductId) REFERENCES Product
+    FOREIGN KEY (ProductId) REFERENCES Product,
+    CONSTRAINT CHK_Volume CHECK (Volume>0)
 );
 
 CREATE TABLE Egg(
@@ -148,7 +156,8 @@ CREATE TABLE Egg(
     Quantity INTEGER,
     Size VARCHAR(150),
     PRIMARY KEY (ProductId),
-    FOREIGN KEY (ProductId) REFERENCES Product
+    FOREIGN KEY (ProductId) REFERENCES Product,
+    CONSTRAINT CHK_Quantity CHECK (Quantity>0)
 );
 
 CREATE TABLE Wool(
@@ -156,7 +165,8 @@ CREATE TABLE Wool(
     Weight INTEGER,
     Grade VARCHAR(150),
     PRIMARY KEY (ProductId),
-    FOREIGN KEY (ProductId) REFERENCES Product
+    FOREIGN KEY (ProductId) REFERENCES Product,
+    CONSTRAINT CHK_Weight CHECK (Weight>0)
 );
 
 
@@ -184,10 +194,11 @@ CREATE TABLE MealFeeding(
     Food VARCHAR(150),
     Water INTEGER,
     AnimalId INTEGER,
-    SIN INTEGER,
+    SIN CHAR(9),
     PRIMARY KEY (Date, AnimalId),
     FOREIGN KEY (AnimalId) REFERENCES Animal,
-    FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE SET NULL
+    FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE SET NULL,
+    CONSTRAINT CHK_Water CHECK (Water>0)
 );
 
 INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ('2018-02-20', 'Birthday Cake', 2, 1, 222222222);
@@ -198,13 +209,14 @@ INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ((NOW() AT TIM
 
 CREATE TABLE Harvests(
     Id INTEGER,
-    SIN INTEGER,
+    SIN CHAR(9),
     ProductId INTEGER,
     Date TIMESTAMP WITHOUT TIME ZONE,
     Duration INTEGER,
     PRIMARY KEY (Id, ProductId),
     FOREIGN KEY (Id) REFERENCES Animal,
-    FOREIGN KEY (ProductId) REFERENCES Product
+    FOREIGN KEY (ProductId) REFERENCES Product,
+    CONSTRAINT CHK_Duration CHECK (Duration>0)
 );
 
 CREATE TABLE CowProduces(
@@ -232,7 +244,7 @@ CREATE TABLE SheepProduces(
 );
 
 CREATE TABLE AnimalMaintenance(
-    SIN INTEGER,
+    SIN CHAR(9),
     Id INTEGER,
     PRIMARY KEY (Id),
     FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE SET NULL

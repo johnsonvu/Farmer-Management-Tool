@@ -16,7 +16,7 @@ router.get('/animals', function (req, res, next) {
 
 /* GET animals listing with pen and farmer */
 router.get('/animals/pen-farmer-list', function (req, res, next) {
-    const query = `SELECT a.id, a.age, a.weight, a.name, a.species, p.location, f.firstname, f.lastname
+    const query = `SELECT a.id, a.age, a.weight, a.name, a.species, a.pennumber, a.sin, p.location, f.firstname, f.lastname
         FROM Animal a
         JOIN Penhouse p ON p.PenNumber = a.PenNumber
         JOIN Farmer f ON f.SIN = a.SIN;`
@@ -54,7 +54,7 @@ router.get('/animals/pen-farmer-list/choose', function (req, res, next) {
         })
 })
 
-
+/* PUT animal update */
 router.put('/animals/update/:id', bodyParser.json(), function (req, res, next) {
     const id = req.params.id
     const age = req.body.age
@@ -70,6 +70,9 @@ router.put('/animals/update/:id', bodyParser.json(), function (req, res, next) {
             res.json(animals)
         })
 })
+
+/* delete animal */
+
 
 router.get('/animals/feed', function (req, res, next) {
     const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, m.food, m.water,
