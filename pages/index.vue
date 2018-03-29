@@ -2,6 +2,7 @@
   <section class="container">
     <div>
     <Logo />
+      <img src="../static/logo.png" alt="logo">
       <h1 class="title">
         Farmer's Management Project
       </h1>
@@ -11,16 +12,6 @@
     </div>
   </section>
 </template>
-
-<script>
-import Logo from '~/components/Logo.vue'
-
-export default {
-  components: {
-    Logo
-  }
-}
-</script>
 
 <style lang="stylus" scoped>
 .container
