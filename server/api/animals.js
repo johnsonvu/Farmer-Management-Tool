@@ -27,6 +27,22 @@ router.get('/animals/pen-farmer-list', function (req, res, next) {
         })
 })
 
+router.put('/animals/update/:id', bodyParser.json(), function (req, res, next) {
+    const id = req.params.id
+    const age = req.body.age
+    const weight = req.body.weight
+    const name = req.body.name
+    const sin = req.body.sin
+    const pennumber = req.body.pennumber
+    
+    const query = `UPDATE Animal SET age = ${age}, weight = ${weight}, name = '${name}', sin = ${sin}, pennumber = ${pennumber} WHERE id = ${id};`
+    connection.query(query, { type: connection.QueryTypes.UPDATE })
+        .then(animals => {
+            console.log(animals)
+            res.json(animals)
+        })
+})
+
 router.get('/animals/feed', function (req, res, next) {
     const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, m.food, m.water,
         CASE WHEN m.date IS NULL
