@@ -27,6 +27,34 @@ router.get('/animals/pen-farmer-list', function (req, res, next) {
         })
 })
 
+router.get('/animals/pen-farmer-list/choose', function (req, res, next) {
+    const age = req.query.age
+    const weight = req.query.weight
+    const name = req.query.name
+    const animal = req.query.animal
+    var cond = '';
+    if (age) {
+        cond = cond + 'a.age, '
+    }
+    if (name) {
+        cond = cond + 'a.name, '
+    }
+    if (weight) {
+        cond = cond + 'a.weight, '
+    }
+    const query = `SELECT a.id, ${cond}a.species, p.location, f.firstname, f.lastname
+        FROM Animal a
+        JOIN Penhouse p ON p.PenNumber = a.PenNumber
+        JOIN Farmer f ON f.SIN = a.SIN
+        WHERE a.species = '${animal}';`
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(animals => {
+            console.log(animals)
+            res.json(animals)
+        })
+})
+
+
 router.put('/animals/update/:id', bodyParser.json(), function (req, res, next) {
     const id = req.params.id
     const age = req.body.age
