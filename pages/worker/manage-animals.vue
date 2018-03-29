@@ -22,7 +22,12 @@
                 <td>{{ animal.name }}</td>
                 <td>{{animal.age}}</td>
                 <td>{{ animal.weight }}</td>
-                <td>{{ animal.location }}</td>
+                
+                <td> 
+                <select selected="animal.pennumber">
+                  <option v-for="(pen, penIndex) in pens" value="pen.pennumber" key="pen.pennumber">{{pen.location}}</option>
+                </select>
+                </td>
                 <td>{{ animal.firstname + ' ' + animal.lastname}}</td>
                 <td>
                     <input v-show="true" type="button" class="actionButton updateButton" v-on:click="tryUpdate(index)" value="Update" />
@@ -31,7 +36,6 @@
                     <input v-show="true" type="button" class="actionButton deleteButton" v-on:click="tryDelete(index)" value="Delete" />
                 </td>
               </tr>
-            
           </tbody>
         </table>
       </div>
