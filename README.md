@@ -18,6 +18,9 @@ Xingyu Tao - r4i0b - T2C
 # install dependencies
 $ npm install # Or yarn install
 
+# redirect to server
+$ source env_setup
+
 # build
 $ npm run build
 
