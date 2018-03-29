@@ -145,6 +145,10 @@ INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 4,
 INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-27', 4, 222222222);
 INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 30, 'B');
 
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-28', 3, 222222222);
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 2, 'AA');
+
+
 CREATE TABLE MealFeeding(
     Date DATE,
     Food CHAR(150),
