@@ -12,7 +12,7 @@
                         <option value="MAX">best</option>
                         <option value="MIN">lowest</option>
                     </select>
-                    yield of each species:
+                    yield average of each species:
                 </div>
                 <br />
 
