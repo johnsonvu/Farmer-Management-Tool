@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS Penhouse;
 
 CREATE TABLE Penhouse(
     PenNumber INTEGER,
-    Location CHAR(100),
+    Location VARCHAR(100),
     Size INTEGER,
     PRIMARY KEY (PenNumber)
 );
@@ -40,8 +40,8 @@ INSERT INTO Penhouse (PenNumber, Location, Size) VALUES (nextval('PenNumber_seq'
 
 CREATE TABLE Farmer(
     SIN INTEGER,
-    FirstName CHAR(150),
-    LastName CHAR(150),
+    FirstName VARCHAR(150),
+    LastName VARCHAR(150),
     PRIMARY KEY (SIN)
 );
 
@@ -78,9 +78,9 @@ CREATE TABLE Animal(
     Id INTEGER,
     Age INTEGER,
     Weight INTEGER,
-    Name CHAR(150),
+    Name VARCHAR(150),
     SIN INTEGER,
-    Species CHAR(150),
+    Species VARCHAR(150),
     PenNumber INTEGER,
     PRIMARY KEY (Id),
     FOREIGN KEY (PenNumber) REFERENCES Penhouse,
@@ -124,7 +124,7 @@ ALTER TABLE ProductId_seq OWNER TO yvttysuu;
 CREATE TABLE Milk(
     ProductId INTEGER,
     Volume INTEGER,
-    Grade CHAR(150),
+    Grade VARCHAR(150),
     PRIMARY KEY (ProductId),
     FOREIGN KEY (ProductId) REFERENCES Product
 );
@@ -132,7 +132,7 @@ CREATE TABLE Milk(
 CREATE TABLE Egg(
     ProductId INTEGER,
     Quantity INTEGER,
-    Size CHAR(150),
+    Size VARCHAR(150),
     PRIMARY KEY (ProductId),
     FOREIGN KEY (ProductId) REFERENCES Product
 );
@@ -140,7 +140,7 @@ CREATE TABLE Egg(
 CREATE TABLE Wool(
     ProductId INTEGER,
     Weight INTEGER,
-    Grade CHAR(150),
+    Grade VARCHAR(150),
     PRIMARY KEY (ProductId),
     FOREIGN KEY (ProductId) REFERENCES Product
 );
@@ -167,7 +167,7 @@ INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 2,
 
 CREATE TABLE MealFeeding(
     Date DATE,
-    Food CHAR(150),
+    Food VARCHAR(150),
     Water INTEGER,
     AnimalId INTEGER,
     SIN INTEGER,
