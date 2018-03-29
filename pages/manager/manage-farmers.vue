@@ -1,6 +1,9 @@
 <template>
     <div class="mainDiv">
         <table cellspacing="0">
+            <tr>
+                <td colspan="5" style="font-size: 2em">Workers</td>
+            </tr>
             <tr class="headerRow">
                 <th>SIN</th>
                 <th>First Name</th>
@@ -22,11 +25,39 @@
                 </td>
                 <td>
                     <span v-show="!farmer.editMode">{{ farmer.manager_firstname + " " + farmer.manager_lastname }}</span>
-                    <input v-show="farmer.editMode" type="text" v-model="farmer.manager" />
+                    <select v-show="farmer.editMode" v-model="farmer.manager_sin">
+                        <option v-for="manager in managers" :value="manager.sin">{{ manager.firstname + " " + manager.lastname}}</option>
+                    </select>
                 </td>
                 <td>
                     <input v-show="!farmer.editMode" type="button" class="feedButton" v-on:click="farmer.editMode = true" value="EDIT" />
-                    <input v-show="farmer.editMode" type="button" class="feedButton" v-on:click="trySaveFarmer(index)" value="SAVE" />
+                    <input v-show="farmer.editMode" type="button" class="feedButton" v-on:click="trySaveWorker(farmer)" value="SAVE" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" style="font-size: 2em">Managers</td>
+            </tr>
+            <tr class="headerRow">
+                <th>SIN</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Manager</th>
+                <th>Edit</th>
+            </tr>
+            <tr v-for="(farmer, index) in managers" :key="index">
+                <td>{{ farmer.sin }}</td>
+                <td>
+                    <span v-show="!farmer.editMode">{{ farmer.firstname }}</span>
+                    <input v-show="farmer.editMode" type="text" v-model="farmer.firstname" />
+                </td>
+                <td>
+                    <span v-show="!farmer.editMode">{{ farmer.lastname }}</span>
+                    <input v-show="farmer.editMode" type="text" v-model="farmer.lastname" />
+                </td>
+                <td></td>
+                <td>
+                    <input v-show="!farmer.editMode" type="button" class="feedButton" v-on:click="farmer.editMode = true" value="EDIT" />
+                    <input v-show="farmer.editMode" type="button" class="feedButton" v-on:click="trySaveManager(farmer)" value="SAVE" />
                 </td>
             </tr>
         </table>
@@ -39,10 +70,15 @@
     export default {
         async asyncData () {
             let [workers, managers] = await Promise.all([axios.get('/api/farmers/workers'), axios.get('api/farmers/managers')])
-            console.log(workers.data.list)
+            // console.log(workers.data.list)
             // let workers = await axios.get('/api/farmers/workers')
             // let managers = await axios.get('/api/farmers/managers')
-            console.log(workers.data)
+            for (var worker of workers.data) {
+                worker.editMode = false
+            }
+            for (var manager of managers.data) {
+                manager.editMode = false
+            }
             return { workers: workers.data, managers: managers.data }
         },
 
@@ -59,36 +95,29 @@
         },
 
         methods: {
-            trySaveFarmer (index) {
-                if (this.farmers[index].food === '' || this.farmers[index].food === undefined) {
-                    alert('Please enter food type before submitting')
-                } else if (this.farmers[index].water === '' || this.farmers[index].water === undefined) {
-                    alert('Please enter litres of water before submitting')
+            trySaveWorker (farmer) {
+                if (farmer.firstname === '' || farmer.lastname === '' || farmer.manager_sin === '') {
+                    alert(`Invalid data! ${farmer.firstname} ${farmer.lastname} could not be saved! Please ensure all fields are valid and try again.`)
                 } else {
-                    this.feed(index)
+                    this.saveWorker(farmer)
                 }
             },
-            saveFarmer (index) {
-                this.farmers[index].hasfed = true
-                axios.post('/api/meal-feedings', {
+            saveWorker (farmer) {
+                axios.put('/api/farmers/workers', {
                     headers:
                         {
                             'Content-Type': 'application/json'
                         },
                     data:
                         {
-                            date: this.parseDate(new Date()),
-                            food: this.farmers[index].food,
-                            water: this.farmers[index].water,
-                            farmerId: this.farmers[index].id,
-                            sin: this.farmers[index].sin
+                            'sin': farmer.sin,
+                            'firstname': farmer.firstname,
+                            'lastname': farmer.lastname,
+                            'manager_sin': farmer.manager_sin
                         }})
-            },
-            parseDate (date) {
-                var year = date.getFullYear()
-                var month = date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
-                var day = date.getDate()
-                return year + '-' + month + '-' + day
+                    .then(response => {
+                        farmer.editMode = false
+                    })
             }
         }
     }
