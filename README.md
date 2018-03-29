@@ -5,10 +5,12 @@
 ### Farmer's Management Project
 
 ## Team Members
+```bash
 Johnson Vu - x3l0b - T2F
 Justin Kwan - p0d0b - T2K
 Nicholas Leung - t4i0b - T2C
 Xingyu Tao - r4i0b - T2C
+```
 
 ### Build Setup
 
