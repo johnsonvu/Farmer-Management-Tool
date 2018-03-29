@@ -1,42 +1,127 @@
 <template>
     <div>
-        <table cellspacing="0">
-            <tr class="headerRow">
-                <th>Species</th>
-                <th>Name</th>
-                <th>Pen House</th>
-                <th>Egg Quantity</th>
-                <th>Egg Size</th>
-            </tr>
-            <tr v-for="(chicken, index) in chickens" :key="chicken.id">
-                <td>
-                    {{ chicken.species }}
-                </td>
-                <td>
-                    {{ chicken.name }}
-                </td>
-                <td>
-                    {{ chicken.pennumber }}
-                </td>
-                <td>
-                    <input v-show="!chicken.hasharvested" type="number" v-model="chicken.quantity" placeholder="Amount" />
-                    <span v-show="chicken.hasharvested" style="color: forestgreen;">{{ chicken.quantity }}</span>
-                </td>
-                <td>
-                    <select v-show="!chicken.hasharvested" v-model="chicken.size" name="size">
-                        <option value="Small">Small</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Large">Large</option>
-                        <option value="X-Large">X-Large</option>
-                    </select>
-                    <span v-show="chicken.hasharvested" style="color: forestgreen;">{{ chicken.size }}</span>
-                </td>
-                <td>
-                    <input v-show="!chicken.hasharvested" type="button" class="feedButton" v-on:click="tryHarvestAnimals(chickens, index, 'CHICKEN', 'quantity', 'size')" value="Submit" />
-                    <span v-show="chicken.hasharvested" style="color: forestgreen;">Harvested</span>
-                </td>
-            </tr>
-        </table>
+        <!--Chicken Harvesting-->
+        <div>
+            <table cellspacing="0">
+                <tr class="headerRow">
+                    <th>Species</th>
+                    <th>Name</th>
+                    <th>Pen House</th>
+                    <th>Egg Quantity</th>
+                    <th>Egg Size</th>
+                </tr>
+                <tr v-for="(chicken, index) in chickens" :key="chicken.id">
+                    <td>
+                        {{ chicken.species }}
+                    </td>
+                    <td>
+                        {{ chicken.name }}
+                    </td>
+                    <td>
+                        {{ chicken.pennumber }}
+                    </td>
+                    <td>
+                        <input v-show="!chicken.hasharvested" type="number" v-model="chicken.quantity" placeholder="Amount" />
+                        <span v-show="chicken.hasharvested" style="color: forestgreen;">{{ chicken.quantity }}</span>
+                    </td>
+                    <td>
+                        <select v-show="!chicken.hasharvested" v-model="chicken.size" name="size">
+                            <option value="Small">Small</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Large">Large</option>
+                            <option value="X-Large">X-Large</option>
+                        </select>
+                        <span v-show="chicken.hasharvested" style="color: forestgreen;">{{ chicken.size }}</span>
+                    </td>
+                    <td>
+                        <input v-show="!chicken.hasharvested" type="button" class="feedButton" v-on:click="tryHarvestAnimals(chickens, index, 'CHICKEN', 'quantity', 'size')" value="Submit" />
+                        <span v-show="chicken.hasharvested" style="color: forestgreen;">Harvested</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!--Cow Harvesting-->
+        <div>
+            <table cellspacing="0">
+                <tr class="headerRow">
+                    <th>Species</th>
+                    <th>Name</th>
+                    <th>Pen House</th>
+                    <th>Milk Volume (L)</th>
+                    <th>Milk Grade</th>
+                </tr>
+                <tr v-for="(cow, index) in cows" :key="cow.id">
+                    <td>
+                        {{ cow.species }}
+                    </td>
+                    <td>
+                        {{ cow.name }}
+                    </td>
+                    <td>
+                        {{ cow.pennumber }}
+                    </td>
+                    <td>
+                        <input v-show="!cow.hasharvested" type="number" v-model="cow.volume" placeholder="Volume" />
+                        <span v-show="cow.hasharvested" style="color: forestgreen;">{{ cow.volume }}</span>
+                    </td>
+                    <td>
+                        <select v-show="!cow.hasharvested" v-model="cow.grade" name="size">
+                            <option value="B">B</option>
+                            <option value="B+">B+</option>
+                            <option value="A">A</option>
+                            <option value="A+">A+</option>
+                        </select>
+                        <span v-show="cow.hasharvested" style="color: forestgreen;">{{ cow.size }}</span>
+                    </td>
+                    <td>
+                        <input v-show="!cow.hasharvested" type="button" class="feedButton" v-on:click="tryHarvestAnimals(cows, index, 'COW', 'volume', 'grade')" value="Submit" />
+                        <span v-show="cow.hasharvested" style="color: forestgreen;">Harvested</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!--Sheep Harvesting-->
+        <div>
+            <table cellspacing="0">
+                <tr class="headerRow">
+                    <th>Species</th>
+                    <th>Name</th>
+                    <th>Pen House</th>
+                    <th>Wool Weight (lbs)</th>
+                    <th>Wool Grade</th>
+                </tr>
+                <tr v-for="(sheep, index) in sheeps" :key="sheep.id">
+                    <td>
+                        {{ sheep.species }}
+                    </td>
+                    <td>
+                        {{ sheep.name }}
+                    </td>
+                    <td>
+                        {{ sheep.pennumber }}
+                    </td>
+                    <td>
+                        <input v-show="!sheep.hasharvested" type="number" v-model="sheep.weight" placeholder="lbs" />
+                        <span v-show="sheep.hasharvested" style="color: forestgreen;">{{ sheep.weight }}</span>
+                    </td>
+                    <td>
+                        <select v-show="!sheep.hasharvested" v-model="sheep.grade" name="size">
+                            <option value="B">B</option>
+                            <option value="B+">B+</option>
+                            <option value="A">A</option>
+                            <option value="A+">A+</option>
+                        </select>
+                        <span v-show="sheep.hasharvested" style="color: forestgreen;">{{ sheep.size }}</span>
+                    </td>
+                    <td>
+                        <input v-show="!sheep.hasharvested" type="button" class="feedButton" v-on:click="tryHarvestAnimals(sheeps, index, 'SHEEP', 'weight', 'grade')" value="Submit" />
+                        <span v-show="sheep.hasharvested" style="color: forestgreen;">Harvested</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </template>
 
