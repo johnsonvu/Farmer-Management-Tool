@@ -15,20 +15,22 @@
             </tr>
           </thead>
           <tbody>
-            
               <tr v-for="(animal, index) in animals" :key="animal.id">
-                <td>{{animal.id}}</td>
+                <td>{{ animal.id }}</td>
                 <td>{{ animal.species }}</td>
-                <td>{{ animal.name }}</td>
-                <td>{{animal.age}}</td>
-                <td>{{ animal.weight }}</td>
-                
-                <td> 
-                <select selected="animal.pennumber">
-                  <option v-for="(pen, penIndex) in pens" value="pen.pennumber" key="pen.pennumber">{{pen.location}}</option>
+                <td><input type="text" name="a_name" :value="animal.name" v-model="animal.name" size="10"><br></td>
+                <td><input type="text" name="a_age" :value="animal.age" v-model="animal.age" size="5"></td>
+                <td><input type="text" name="a_weight" :value="animal.weight" v-model="animal.weight" size="5"></td>
+                <td>
+                <select v-model="animal.pennumber">
+                  <option v-for="pen in pens" :value="pen.pennumber" key="pen.pennumber"  >{{pen.location}}</option>
                 </select>
                 </td>
-                <td>{{ animal.firstname + ' ' + animal.lastname}}</td>
+                <td>
+                <select v-model="animal.sin">
+                    <option v-for="(farmer, farmerIndex) in farmers" :value="farmer.sin" key="farmer.sin" >{{farmer.firstname + ' ' + farmer.lastname}}</option>
+                </select>
+                </td>
                 <td>
                     <input v-show="true" type="button" class="actionButton updateButton" v-on:click="tryUpdate(index)" value="Update" />
                 </td>
@@ -46,8 +48,8 @@ import axios from '~/plugins/axios'
 
 export default {
     async asyncData () {
-        let [animals, pens] = await Promise.all([axios.get('/api/animals/pen-farmer-list'), axios.get('/api/pens')])
-        return {animals: animals.data, pens: pens.data}
+        let [animals, pens, farmers] = await Promise.all([axios.get('/api/animals/pen-farmer-list'), axios.get('/api/pens'), axios.get('/api/farmers/all')])
+        return {animals: animals.data, pens: pens.data, farmers: farmers.data}
     },
 
     head () {
@@ -58,10 +60,23 @@ export default {
 
     methods: {
         tryUpdate (index) {
-
+          if (this.animals[index].name === '' || this.animals[index].name === undefined || this.animals[index].name === null) {
+            alert('Please enter animal name before submitting')
+          } else {
+              let id = this.animals[index].id
+              let data = {
+                      id: this.animals[index].id,
+                      age: this.animals[index].age,
+                      weight: this.animals[index].weight,
+                      name: this.animals[index].name,
+                      sin: this.animals[index].sin,
+                      pennumber: this.animals[index].pennumber}
+              this.update(id, data)
+          }
         },
-        update (index) {
-
+        update (id, data) {
+            console.log(data)
+          axios.put(`/api/animals/update/${id}`, data)
         },
         tryDelete (index) {
 
