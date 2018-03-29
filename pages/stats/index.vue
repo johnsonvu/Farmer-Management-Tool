@@ -8,12 +8,11 @@
 
                 <div>
                     View the
-                    <!--<select name="Performance" v-on:change="updateCategories(this.options[this.selectedIndex].value)">-->
                     <select id="performanceOption" name="Performance" v-on:change="updateCategories()">
                         <option value="MAX">best</option>
                         <option value="MIN">lowest</option>
                     </select>
-                    performing animal of each species:
+                    yield of each species:
                 </div>
                 <br />
 
