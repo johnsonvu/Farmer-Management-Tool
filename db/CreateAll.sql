@@ -136,13 +136,13 @@ CREATE TABLE Wool(
     FOREIGN KEY (ProductId) REFERENCES Product
 );
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-27', 1, 222222222);
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 1, 222222222);
 INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 3, 'Large');
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-27', 2, 222222222);
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 2, 222222222);
 INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 4, 'A');
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-27', 4, 222222222);
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 4, 222222222);
 INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 30, 'B');
 
 CREATE TABLE MealFeeding(
@@ -160,7 +160,7 @@ INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ('2018-02-20',
 INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ('2018-02-21', 'Leftover Cake', 2, 1, 222222222);
 INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ('2018-02-22', 'Chicken food', 2, 1, 222222222);
 INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ('2018-02-20', 'Ice Cream Cake', 1, 3, 222222222);
-INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ('2018-03-27', 'Green Donuts', 1, 3, 222222222);
+INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES ((NOW() AT TIME ZONE 'US/Pacific')::DATE, 'Green Donuts', 1, 3, 222222222);
 
 CREATE TABLE Harvests(
     Id INTEGER,
