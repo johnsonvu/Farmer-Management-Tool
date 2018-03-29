@@ -26,6 +26,13 @@
 </template>
 
 <script>
+    export default {
+        head () {
+            return {
+                title: 'Worker'
+            }
+        }
+    }
 </script>
 
 <style lang="stylus" scoped>
