@@ -6,7 +6,7 @@ const router = Router()
 
 /* GET product listing. */
 router.get('/products', function (req, res, next) {
-    const query = 'SELECT * FROM Product;'
+    const query = `SELECT * FROM Product;`
     connection.query(query, { type: connection.QueryTypes.SELECT })
         .then(products => {
             console.log(products)
@@ -187,7 +187,7 @@ router.get('/products/wool/count', function (req, res, next) {
 router.get('/products/eggs/range/average', function (req, res, next) {
     const fromDate = req.query.fromDate
     const toDate = req.query.toDate
-    const query = `SELECT AVG(e.quantity)
+    const query = `SELECT AVG(e.quantity)::DECIMAL(16,2)
         FROM Product p
         JOIN Egg e ON e.productid = p.productid
         WHERE p.productiondate >= '${fromDate}' AND p.productiondate <= '${toDate}';`
@@ -201,7 +201,7 @@ router.get('/products/eggs/range/average', function (req, res, next) {
 router.get('/products/milk/range/average', function (req, res, next) {
     const fromDate = req.query.fromDate
     const toDate = req.query.toDate
-    const query = `SELECT AVG(m.volume)
+    const query = `SELECT AVG(m.volume)::DECIMAL(16,2)
         FROM Product p
         JOIN Milk m ON m.productid = p.productid
         WHERE p.productiondate >= '${fromDate}' AND p.productiondate <= '${toDate}';`
@@ -215,7 +215,7 @@ router.get('/products/milk/range/average', function (req, res, next) {
 router.get('/products/wool/range/average', function (req, res, next) {
     const fromDate = req.query.fromDate
     const toDate = req.query.toDate
-    const query = `SELECT AVG(w.weight)
+    const query = `SELECT AVG(w.weight)::DECIMAL(16,2)
         FROM Product p
         JOIN Wool w ON w.productid = p.productid
         WHERE p.productiondate >= '${fromDate}' AND p.productiondate <= '${toDate}';`
