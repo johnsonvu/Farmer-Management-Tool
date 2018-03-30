@@ -6,6 +6,31 @@
                     <span class="subsection-title" style="vertical-align: middle;">Statistics</span>
                 </div>
 
+                <!--Farmer All Stars-->
+                <br />
+                <div>
+                    Farmers that are responsible for all species:
+                </div>
+                <br />
+
+                <table class="simple-table">
+                    <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <template v-for="farmer in allstars">
+                        <tr>
+                            <td>{{farmer.firstname}}</td>
+                            <td>{{farmer.lastname}}</td>
+                        </tr>
+                    </template>
+                    </tbody>
+                </table>
+                <br />
+
                 <!--Category Performance-->
                 <div>
                     View the
@@ -73,17 +98,26 @@
 
     export default {
         async asyncData () {
-            let [categoryPerformanceData, animalPerformanceData] = await Promise.all(
-                [axios.get('/api/stats/animal/performance/max'), axios.get('/api/stats/animal/performance')]
+            let [categoryPerformanceData, animalPerformanceData, allstars] = await Promise.all(
+                [
+                    axios.get('/api/stats/animal/performance/max'),
+                    axios.get('/api/stats/animal/performance'),
+                    axios.get('/api/stats/farmer/allstars')
+                ]
             )
-            return { categories: categoryPerformanceData.data, animals: animalPerformanceData.data }
+            return {
+                categories: categoryPerformanceData.data,
+                animals: animalPerformanceData.data,
+                allstars: allstars.data
+            }
         },
 
         head () {
             return {
                 title: 'Statistics',
                 categories: [],
-                animals: []
+                animals: [],
+                allstars: []
             }
         },
         methods: {
