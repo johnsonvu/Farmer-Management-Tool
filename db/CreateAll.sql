@@ -36,8 +36,9 @@ CREATE SEQUENCE PenNumber_seq
     CACHE 1;
 ALTER TABLE PenNumber_seq OWNER TO yvttysuu;
 
-INSERT INTO Penhouse (PenNumber, Location, Size) VALUES (nextval('PenNumber_seq'), 'Chicken Coop', 8);
-INSERT INTO Penhouse (PenNumber, Location, Size) VALUES (nextval('PenNumber_seq'), 'Sheep Barn', 6);
+INSERT INTO Penhouse (PenNumber, Location, Size) VALUES (nextval('PenNumber_seq'), 'Chicken Coop', 20);
+INSERT INTO Penhouse (PenNumber, Location, Size) VALUES (nextval('PenNumber_seq'), 'Sheep Barn', 25);
+INSERT INTO Penhouse (PenNumber, Location, Size) VALUES (nextval('PenNumber_seq'), 'Cow Barn', 30);
 
 CREATE TABLE Farmer(
     SIN CHAR(9),
@@ -49,8 +50,10 @@ CREATE TABLE Farmer(
     CONSTRAINT CHK_LastName CHECK (LastName ~ $$[a-zA-Z]+$$)
 );
 
-INSERT INTO Farmer (SIN, FirstName, LastName) VALUES (111111111, 'Johnson', 'Vu');
-INSERT INTO Farmer (SIN, FirstName, LastName) VALUES (222222222, 'Justin', 'Kwan');
+INSERT INTO Farmer (SIN, FirstName, LastName) VALUES ('111111111', 'Johnson', 'Vu');
+INSERT INTO Farmer (SIN, FirstName, LastName) VALUES ('222222222', 'Justin', 'Kwan');
+INSERT INTO Farmer (SIN, FirstName, LastName) VALUES ('333333333', 'Nicholas', 'Leung');
+INSERT INTO Farmer (SIN, FirstName, LastName) VALUES ('444444444', 'Xingtu', 'Tao');
 
 CREATE TABLE Users (
     userid SERIAL,
@@ -68,8 +71,10 @@ CREATE SEQUENCE UsersId_seq
     CACHE 1;
 ALTER TABLE UsersId_seq OWNER TO yvttysuu;
 
-INSERT INTO Users (USERNAME, PASSWORD, SIN) VALUES ('jvu', 'test', 111111111);
-INSERT INTO Users (USERNAME, PASSWORD, SIN) VALUES ('jkw', '1234', 222222222);
+INSERT INTO Users (USERNAME, PASSWORD, SIN) VALUES ('jvu', '1234', '111111111');
+INSERT INTO Users (USERNAME, PASSWORD, SIN) VALUES ('jkw', '1234', '222222222');
+INSERT INTO Users (USERNAME, PASSWORD, SIN) VALUES ('nle', '1234', '333333333');
+INSERT INTO Users (USERNAME, PASSWORD, SIN) VALUES ('xta', '1234', '444444444');
 
 CREATE TABLE HasHealthInsurance (
     SIN CHAR(9),
@@ -95,7 +100,9 @@ CREATE TABLE Worker(
     FOREIGN KEY (Manager_SIN) REFERENCES Manager
 );
 
-INSERT INTO Worker (SIN, Manager_SIN) VALUES (222222222, 111111111);
+INSERT INTO Worker (SIN, Manager_SIN) VALUES ('222222222', '111111111');
+INSERT INTO Worker (SIN, Manager_SIN) VALUES ('333333333', '111111111');
+INSERT INTO Worker (SIN, Manager_SIN) VALUES ('444444444', '111111111');
 
 CREATE TABLE Animal(
     Id INTEGER,
@@ -120,17 +127,30 @@ CREATE SEQUENCE AnimalId_seq
     CACHE 1;
 ALTER TABLE AnimalId_seq OWNER TO yvttysuu;
 
-INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 5, 90, 'Edmond', 222222222, 'CHICKEN', 1);
-INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 1, 55, 'Jeffrey', 222222222, 'CHICKEN', 1);
-INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 4, 33, 'Ma', 222222222, 'CHICKEN', 1);
-INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 7, 22, 'Churches', 222222222, 'CHICKEN', 1);
-INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 3, 110, 'Ian', 222222222, 'SHEEP', 2);
-INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 2, 33, 'Lamb', 222222222, 'SHEEP', 2);
-INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 1, 43, 'Ham', 222222222, 'SHEEP', 2);
-INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 3, 110, 'Joe', 222222222, 'SHEEP', 2);
-INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 4, 223, 'Alan', 222222222, 'COW', 1);
-INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 7, 643, 'Jerry', 222222222, 'COW', 1);
-INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 12, 321, 'Tommy', 222222222, 'COW', 1);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 5, 90, 'Edmond', '222222222', 'CHICKEN', 1);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 1, 55, 'Jeffrey', '222222222', 'CHICKEN', 1);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 4, 33, 'Ma', '222222222', 'CHICKEN', 1);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 7, 22, 'Churches', '222222222', 'CHICKEN', 1);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 3, 110, 'Ian', '222222222', 'SHEEP', 2);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 2, 33, 'Lamb', '222222222', 'SHEEP', 2);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 1, 43, 'Ham', '222222222', 'SHEEP', 2);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 3, 110, 'Joe', '222222222', 'SHEEP', 2);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 4, 223, 'Alan', '222222222', 'COW', 3);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 7, 643, 'Jerry', '222222222', 'COW', 3);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 12, 321, 'Tommy', '222222222', 'COW', 3);
+
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 3, 110, 'Ra', '333333333', 'SHEEP', 2);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 2, 33, 'Ga', '333333333', 'SHEEP', 2);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 1, 43, 'La', '333333333', 'SHEEP', 2);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 3, 110, 'Jea', '333333333', 'SHEEP', 2);
+
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 4, 223, 'Gregor', '444444444', 'COW', 3);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 7, 643, 'Optimus', '444444444', 'COW', 3);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 12, 321, 'Soysauce', '444444444', 'COW', 3);
+
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 7, 22, 'Sushi', '111111111', 'CHICKEN', 1);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 3, 110, 'Pizza', '111111111', 'SHEEP', 2);
+INSERT INTO Animal (Id, Age, Weight, Name, SIN, Species, PenNumber) VALUES (nextval('AnimalId_seq'), 12, 321, 'Kamakazi', '111111111', 'COW', 3);
 
 CREATE TABLE Product(
     ProductId INTEGER,
@@ -175,24 +195,140 @@ CREATE TABLE Wool(
     CONSTRAINT CHK_Weight CHECK (Weight>0)
 );
 
-
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-25', 1, 222222222);
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-25', 1, '222222222');
 INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 3, 'Large');
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-26', 2, 222222222);
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-23', 1, '222222222');
+INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 5, 'Medium');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-26', 2, '222222222');
 INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 7, 'Large');
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 3, 222222222);
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 3, '222222222');
 INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 3, 'Large');
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 5, 222222222);
-INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 4, 'A');
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 4, '222222222');
+INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 2, 'X-Large');
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 9, 222222222);
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 5, '222222222');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 4, 'B+');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 6, '222222222');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 7, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 7, '222222222');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 10, 'B');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 8, '222222222');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 2, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 9, '222222222');
 INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 30, 'B');
 
-INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-28', 10, 222222222);
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-28', 10, '222222222');
 INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 2, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-23', 11, '222222222');
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 6, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-25', 1, '222222222');
+INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 5, 'Large');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-23', 1, '222222222');
+INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 7, 'Medium');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-26', 2, '222222222');
+INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 9, 'Large');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 3, '222222222');
+INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 2, 'Large');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 4, '222222222');
+INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 1, 'X-Large');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 5, '222222222');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 8, 'B+');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 6, '222222222');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 5, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 7, '222222222');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 33, 'B');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 8, '222222222');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 22, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 9, '222222222');
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 31, 'B');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-28', 10, '222222222');
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 7, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-23', 11, '222222222');
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 9, 'A');
+
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 12, '333333333');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 4, 'B+');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 13, '333333333');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 10, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 14, '333333333');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 13, 'B');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 15, '333333333');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 7, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 12, '333333333');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 3, 'B+');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 13, '333333333');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 1, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 14, '333333333');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 11, 'B');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 15, '333333333');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 3, 'A');
+
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 16, '444444444');
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 30, 'B');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-28', 17, '444444444');
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 2, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-23', 18, '444444444');
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 6, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 16, '444444444');
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 21, 'B');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-28', 17, '444444444');
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 3, 'A');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), '2018-02-23', 18, '444444444');
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 2, 'A');
+
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 19, '111111111');
+INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 21, 'X-Large');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 20, '111111111');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 4, 'B');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 21, '111111111');
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 20, 'B');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 19, '111111111');
+INSERT INTO Egg (ProductId, Quantity, Size) VALUES (currval('ProductId_seq'), 11, 'X-Large');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 20, '111111111');
+INSERT INTO Wool (ProductId, Weight, Grade) VALUES (currval('ProductId_seq'), 6, 'B');
+
+INSERT INTO Product (ProductId, ProductionDate, AnimalId, SIN) VALUES (nextval('ProductId_seq'), (NOW() AT TIME ZONE 'US/Pacific')::DATE, 21, '111111111');
+INSERT INTO Milk (ProductId, Volume, Grade) VALUES (currval('ProductId_seq'), 12, 'B');
 
 
 CREATE TABLE MealFeeding(
