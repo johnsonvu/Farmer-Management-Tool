@@ -6,6 +6,7 @@
                 <div style="margin: 25px 10px;">
                     <span class="subsection-title" style="vertical-align: middle;">Chicken Harvesting</span>
                 </div>
+
                 <table cellspacing="0">
                     <tr class="headerRow">
                         <th>Species</th>
@@ -139,8 +140,8 @@
         async asyncData () {
             let [chickens, cows, sheeps] = await Promise.all(
                 [axios.get('/api/animals/harvest/chicken'),
-                axios.get('/api/animals/harvest/cow'),
-                axios.get('/api/animals/harvest/sheep')]
+                    axios.get('/api/animals/harvest/cow'),
+                    axios.get('/api/animals/harvest/sheep')]
             )
             return { chickens: chickens.data, cows: cows.data, sheeps: sheeps.data }
         },
@@ -171,7 +172,6 @@
                 }
             },
             harvest (animals, index, species, param1, param2) {
-                animals[index].hasharvested = true
                 axios.post('/api/animals/harvest/' + species, {
                     headers:
                         {
@@ -183,7 +183,12 @@
                             [param2]: animals[index][param2],
                             animalId: animals[index].id,
                             sin: animals[index].sin
-                        }})
+                        }
+                }).then(() => {
+                    animals[index].hasharvested = true
+                }).catch((err) => {
+                    alert(err.response.data.error)
+                })
             },
             parseDate (date) {
                 var year = date.getFullYear()
