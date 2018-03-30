@@ -80,7 +80,7 @@ router.delete('/animals/delete/:id', function (req, res, next) {
         .then((err, animals) => {
             if(err){
                 console.log(err)
-                res.jons(err)
+                res.json(err)
             }else{
                 console.log(animals)
                 res.json(animals)
