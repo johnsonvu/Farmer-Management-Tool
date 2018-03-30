@@ -5,12 +5,12 @@
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">Product</span>
         </div>
-
-        <input v-model="fromDate" placeholder="fromDate (yyyy-mm-dd)">
-        <input v-model="toDate" placeholder="toDate (yyyy-mm-dd)">
+        Enter Date Range:
+        <input v-model="fromDate" placeholder="From Date (yyyy-mm-dd)">
+        <input v-model="toDate" placeholder="To Date (yyyy-mm-dd)">
         <input type="button" v-on:click="update(fromDate, toDate)" value="Submit" />
 
-        <h1>Eggs</h1>
+        <br><br><h1>Eggs</h1><br>
         <table class="simple-table">
           <thead>
             <tr>
@@ -37,7 +37,8 @@
         </table>
         Average Quantity: {{ eggsavg[0].avg }}<br>
         Total # of Products: {{ eggscount[0].count }}
-        <h1>Milk</h1>
+        <br><br><hr><br>
+        <h1>Milk</h1><br>
         <table class="simple-table">
           <thead>
             <tr>
@@ -64,7 +65,8 @@
         </table>
         Average Volume: {{ milkavg[0].avg }}<br>
         Total # of Products: {{ milkcount[0].count }}
-        <h1>Wool</h1>
+        <br><br><hr><br>
+        <h1>Wool</h1><br>
         <table class="simple-table">
           <thead>
             <tr>

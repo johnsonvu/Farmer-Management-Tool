@@ -10,17 +10,14 @@
             {{ option.text }}
           </option>
         </select>
-        <div id='example-3'>
+       &nbsp;&nbsp;
           <input type="checkbox" id="Age" v-model="age">
-          <label for="Age">Age</label>
+          <label for="Age">Age</label>&nbsp;
           <input type="checkbox" id="Weight" v-model="weight">
-          <label for="Weight">Weight</label>
+          <label for="Weight">Weight</label>&nbsp;
           <input type="checkbox" id="Name" v-model="name">
-          <label for="Name">Name</label>
-          <br>
-          </div>
-        <input type="button" v-on:click="update(selected, age, weight, name)" value="Submit" />
-
+          <label for="Name">Name</label>&nbsp;
+          <input type="button" v-on:click="update(selected, age, weight, name)" value="Submit" /><br><br>
         <table class="simple-table">
           <thead>
             <tr>
