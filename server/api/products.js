@@ -11,6 +11,8 @@ router.get('/products', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products.'})
         })
 })
 
@@ -21,6 +23,8 @@ router.get('/products/list', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products list.'})
         })
 })
 
@@ -38,6 +42,8 @@ router.get('/products/list/range', function (req, res, next) {
             res.json(products)
         }, err=> {
             res.send(null);
+        }).catch((err) => {
+          res.json(400, {error: 'Error querying products range.'})
         })
 })
 
@@ -49,6 +55,8 @@ router.get('/products/eggs', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products egg.'})
         })
 })
 
@@ -60,6 +68,8 @@ router.get('/products/milk', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products milk.'})
         })
 })
 
@@ -71,6 +81,8 @@ router.get('/products/wool', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products wool.'})
         })
 })
 
@@ -85,6 +97,8 @@ router.get('/products/eggs/range', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products egg range.'})
         })
 })
 
@@ -99,6 +113,8 @@ router.get('/products/milk/range', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products milk range.'})
         })
 })
 
@@ -113,6 +129,8 @@ router.get('/products/wool/range', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products wool range.'})
         })
 })
 
@@ -124,6 +142,8 @@ router.get('/products/eggs/average', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products egg avg.'})
         })
 })
 
@@ -135,6 +155,8 @@ router.get('/products/milk/average', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products milk avg.'})
         })
 })
 
@@ -146,6 +168,8 @@ router.get('/products/wool/average', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products wool avg.'})
         })
 })
 
@@ -157,6 +181,8 @@ router.get('/products/eggs/count', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products egg count.'})
         })
 })
 
@@ -168,6 +194,8 @@ router.get('/products/milk/count', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products milk count.'})
         })
 })
 
@@ -179,6 +207,8 @@ router.get('/products/wool/count', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products wool count.'})
         })
 })
 
@@ -195,6 +225,8 @@ router.get('/products/eggs/range/average', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products egg range avg.'})
         })
 })
 
@@ -209,6 +241,8 @@ router.get('/products/milk/range/average', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products milk range avg.'})
         })
 })
 
@@ -223,6 +257,8 @@ router.get('/products/wool/range/average', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products wool range avg.'})
         })
 })
 
@@ -238,6 +274,8 @@ router.get('/products/eggs/range/count', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products milk range count.'})
         })
 })
 
@@ -252,6 +290,8 @@ router.get('/products/milk/range/count', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products milk range count.'})
         })
 })
 
@@ -266,6 +306,8 @@ router.get('/products/wool/range/count', function (req, res, next) {
         .then(products => {
             console.log(products)
             res.json(products)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying products wool range count.'})
         })
 })
 

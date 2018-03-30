@@ -10,6 +10,8 @@ router.get('/pens', function (req, res, next) {
         .then(pens => {
             console.log(pens)
             res.json(pens)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying pens list.'})
         })
 })
 
