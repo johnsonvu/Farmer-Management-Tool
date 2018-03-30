@@ -57,7 +57,7 @@
                 console.log(this.username)
                 console.log(this.password)
                 console.log(this.sin)
-                if (this.sin.length < 9) {
+                if (this.sin.length > 1) {
                     this.addFarmer()
                 } else {
                     this.addStockholder()

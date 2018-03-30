@@ -82,11 +82,10 @@ router.post('/users/addfarmer', bodyParser.json(), function (req, res, next) {
 })
 
 router.post('/users/add', bodyParser.json(), function (req, res, next) {
-    console.log(req)
     const username = req.body.data.username
     const password = req.body.data.password
 
-    const query = 'INSERT INTO Users (username, password) VALUES (:username, :password) ;'
+    const query = 'INSERT INTO Users (username, password, sin) VALUES (:username, :password, NULL) ;'
     connection.query(query,
         {
             type: connection.QueryTypes.INSERT,
