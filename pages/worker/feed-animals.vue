@@ -1,47 +1,55 @@
 <template>
-    <div>
-        <table cellspacing="0">
-            <tr class="headerRow">
-                <th>Species</th>
-                <th>Name</th>
-                <!--<th>Age</th>-->
-                <!--<th>Weight</th>-->
-                <!--<th>Pen House</th>-->
-                <th>Food</th>
-                <th>Water (L)</th>
-                <th>Feeding</th>
-            </tr>
-            <tr v-for="(animal, index) in animals" :key="animal.id">
-                <td>
-                    {{ animal.species }}
-                </td>
-                <td>
-                    {{ animal.name }}
-                </td>
-                <!--<td>-->
-                    <!--{{ animal.age }}-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--{{ animal.weight }}-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--{{ animal.pennumber }}-->
-                <!--</td>-->
-                <td>
-                    <input v-show="!animal.hasfed" type="text" v-model="animal.food" placeholder="Food given" />
-                    <span v-show="animal.hasfed" style="color: forestgreen;">{{ animal.food }}</span>
-                </td>
-                <td>
-                    <input v-show="!animal.hasfed" type="number" min="0" max="100" v-model="animal.water" placeholder="Litres of water given" />
-                    <span v-show="animal.hasfed" style="color: forestgreen;">{{ animal.water }}</span>
-                </td>
-                <td>
-                    <input v-show="!animal.hasfed" type="button" class="feedButton" v-on:click="tryFeed(index)" value="Submit" />
-                    <span v-show="animal.hasfed" style="color: forestgreen;">FED :)</span>
-                </td>
-            </tr>
-        </table>
-    </div>
+    <section class="main-view">
+        <div class="content">
+            <div class="subsection">
+                <!--Feed Animals-->
+                <div style="margin: 25px 10px;">
+                    <span class="subsection-title" style="vertical-align: middle;">Feed Animals</span>
+                </div>
+                <table cellspacing="0">
+                    <tr class="headerRow">
+                        <th>Species</th>
+                        <th>Name</th>
+                        <!--<th>Age</th>-->
+                        <!--<th>Weight</th>-->
+                        <!--<th>Pen House</th>-->
+                        <th>Food</th>
+                        <th>Water (L)</th>
+                        <th>Feeding</th>
+                    </tr>
+                    <tr v-for="(animal, index) in animals" :key="animal.id">
+                        <td>
+                            {{ animal.species }}
+                        </td>
+                        <td>
+                            {{ animal.name }}
+                        </td>
+                        <!--<td>-->
+                        <!--{{ animal.age }}-->
+                        <!--</td>-->
+                        <!--<td>-->
+                        <!--{{ animal.weight }}-->
+                        <!--</td>-->
+                        <!--<td>-->
+                        <!--{{ animal.pennumber }}-->
+                        <!--</td>-->
+                        <td>
+                            <input v-show="!animal.hasfed" type="text" v-model="animal.food" placeholder="Food given" />
+                            <span v-show="animal.hasfed" style="color: forestgreen;">{{ animal.food }}</span>
+                        </td>
+                        <td>
+                            <input v-show="!animal.hasfed" type="number" min="0" max="100" v-model="animal.water" placeholder="Litres of water given" />
+                            <span v-show="animal.hasfed" style="color: forestgreen;">{{ animal.water }}</span>
+                        </td>
+                        <td>
+                            <input v-show="!animal.hasfed" type="button" class="feedButton" v-on:click="tryFeed(index)" value="Submit" />
+                            <span v-show="animal.hasfed" style="color: forestgreen;">FED :)</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
 </template>
 
 <script>
@@ -92,7 +100,7 @@
                             water: this.animals[index].water,
                             animalId: this.animals[index].id,
                             sin: this.animals[index].sin
-                }})
+                        }})
             },
             parseDate (date) {
                 var year = date.getFullYear()
@@ -105,7 +113,7 @@
 </script>
 
 <style lang="stylus" scoped>
-    .users-view
+    .main-view
         padding-top 0
 
     .content
