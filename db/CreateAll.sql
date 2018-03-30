@@ -125,7 +125,7 @@ CREATE TABLE Product(
     AnimalId INTEGER,
     SIN INTEGER,
     PRIMARY KEY (ProductId),
-    FOREIGN KEY (AnimalId) REFERENCES Animal,
+    FOREIGN KEY (AnimalId) REFERENCES Animal ON DELETE SET NULL,
     FOREIGN KEY (SIN) REFERENCES Farmer ON DELETE SET NULL
 );
 
@@ -203,7 +203,7 @@ CREATE TABLE Harvests(
     Date TIMESTAMP WITHOUT TIME ZONE,
     Duration INTEGER,
     PRIMARY KEY (Id, ProductId),
-    FOREIGN KEY (Id) REFERENCES Animal,
+    FOREIGN KEY (Id) REFERENCES Animal ON DELETE SET NULL,
     FOREIGN KEY (ProductId) REFERENCES Product
 );
 
@@ -211,7 +211,7 @@ CREATE TABLE CowProduces(
     ProductId INTEGER,
     Id INTEGER,
     PRIMARY KEY (ProductId),
-    FOREIGN KEY (Id) REFERENCES Animal,
+    FOREIGN KEY (Id) REFERENCES Animal ON DELETE SET NULL,
     FOREIGN KEY (ProductId) REFERENCES Product
 );
 
@@ -219,7 +219,7 @@ CREATE TABLE ChickenProduces(
     ProductId INTEGER,
     Id INTEGER,
     PRIMARY KEY (ProductId),
-    FOREIGN KEY (Id) REFERENCES Animal,
+    FOREIGN KEY (Id) REFERENCES Animal ON DELETE SET NULL,
     FOREIGN KEY (ProductId) REFERENCES Product
 );
 
@@ -227,7 +227,7 @@ CREATE TABLE SheepProduces(
     ProductId INTEGER,
     Id INTEGER,
     PRIMARY KEY (ProductId),
-    FOREIGN KEY (Id) REFERENCES Animal,
+    FOREIGN KEY (Id) REFERENCES Animal ON DELETE SET NULL,
     FOREIGN KEY (ProductId) REFERENCES Product
 );
 

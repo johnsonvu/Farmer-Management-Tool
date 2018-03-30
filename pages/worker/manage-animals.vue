@@ -79,10 +79,17 @@ export default {
           axios.put(`/api/animals/update/${id}`, data)
         },
         tryDelete (index) {
-
+          console.log('delete button pushed')
+          let id = this.animals[index].id
+          this.delete(id)
         },
-        delete (index) {
-
+        delete (id) {
+          console.log(id)
+          axios.delete(`/api/animals/delete/${id}`)
+          .then((response) => {
+            console.log('axios log: ', response)
+          })
+          .catch(error => Promise.reject(error))
         }
     }
 }
