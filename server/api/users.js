@@ -1,4 +1,5 @@
 import { Router } from 'express'
+
 var connection = require('../configs/sequelize')
 const bodyParser = require('body-parser')
 const router = Router()
@@ -11,52 +12,54 @@ router.get('/users', function (req, res, next) {
             console.log(users)
             res.json(users)
         }).catch((err) => {
-            res.json(400, {error: 'Error querying users.'})
-        })
+        res.json(400, {error: 'Error querying users.'})
+    })
 })
 
 /* GET user by ID. */
 router.get('/users/:username', function (req, res, next) {
-  const username = req.params.username
-  const query = 'SELECT * FROM Users WHERE username = :username ;'
-  connection.query(query, 
-    { 
-      type: connection.QueryTypes.SELECT,
-      replacements: {
-        username: username
-      }
+    const username = req.params.username
+    const query = 'SELECT * FROM Users WHERE username = :username ;'
+    connection.query(query,
+        {
+            type: connection.QueryTypes.SELECT,
+            replacements: {
+                username: username
+            }
+        })
+        .then(user => {
+            if (user.length === 1) {
+                res.json(user[0])
+            } else {
+                res.status(404).json({})
+            }
+        }).catch((err) => {
+        res.json(400, {error: 'Error querying users.'})
     })
-    .then(user => {
-      if (user.length === 1 ) {
-        res.json(user[0])
-      } else {
-        res.status(404).json({})
-      }
-    }).catch((err) => {
-      res.json(400, {error: 'Error querying users.'})
-    })
+})
 
 router.post('/users/update', bodyParser.json(), function (req, res, next) {
     const userid = req.body.data.userid
     const username = req.body.data.username
     const password = req.body.data.password
 
-  const query = 'UPDATE Users SET username = :username, password = :password WHERE userid = :userid ;'
-  connection.query(query,
-    {
-      type: connection.QueryTypes.UPDATE,
-      replacements: {
-        username: username,
-        password: password,
-        userid: userid
-      }
+    const query = 'UPDATE Users SET username = :username, password = :password WHERE userid = :userid ;'
+    connection.query(query,
+        {
+            type: connection.QueryTypes.UPDATE,
+            replacements: {
+                username: username,
+                password: password,
+                userid: userid
+            }
+        })
+        .then(result => {
+            // result[1] is the number of rows changed
+            res.send('/users')
+        }).catch((err) => {
+        res.json(400, {error: 'Error updating user.'})
     })
-    .then(result => {
-      // result[1] is the number of rows changed
-      res.send('/users')
-    }).catch((err) => {
-      res.json(400, {error: 'Error updating user.'})
-    })
+})
 
 router.post('/users/addfarmer', bodyParser.json(), function (req, res, next) {
     const username = req.body.data.username
@@ -77,8 +80,8 @@ router.post('/users/addfarmer', bodyParser.json(), function (req, res, next) {
             // result[1] is the number of rows changed
             res.send(result)
         }).catch((err) => {
-            res.json(400, {error: 'Error inserting user.'})
-        })
+        res.json(400, {error: 'Error inserting user.'})
+    })
 })
 
 router.post('/users/add', bodyParser.json(), function (req, res, next) {
@@ -98,8 +101,8 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
             // result[1] is the number of rows changed
             res.send(result)
         }).catch((err) => {
-            res.json(400, {error: 'Error inserting user.'})
-        })
+        res.json(400, {error: 'Error inserting user.'})
+    })
 })
 
 router.post('/login', bodyParser.json(), function (req, res, next) {
@@ -127,8 +130,8 @@ router.post('/login', bodyParser.json(), function (req, res, next) {
             // result[1] is the number of rows changed
             res.send(result)
         }).catch((err) => {
-            res.json(400, {error: 'Error querying users.'})
-        })
+        res.json(400, {error: 'Error querying users.'})
+    })
 })
 
 export default router
