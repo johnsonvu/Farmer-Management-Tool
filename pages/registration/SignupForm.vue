@@ -8,7 +8,7 @@
         <table style="margin: auto">
             <tr>
                 <td style="text-align: right">Farmer(opt): </td>
-                <select v-model="f.sin" style="width: 100%">
+                <select v-model="sin" style="width: 100%">
                     <option v-for="(f, index) in farmers" :value="f.sin" key="f.sin" >{{f.firstname + ' ' + f.lastname}}</option>
                 </select>
                 </td>
@@ -22,7 +22,7 @@
                 <td><input v-model="password" type="password" /></td>
             </tr>
             <tr>
-                <td colspan="2" style="text-align: center"><input type="button" class="button--grey" style="margin-top:1em" v-on:click="signup" :value="loginButtonText" /></td>
+                <td colspan="2" style="text-align: center"><input type="button" class="button--grey" style="margin-top:1em" v-on:click="trySignup()" :value="signupText" /></td>
             </tr>
         </table>
     </div>
@@ -44,17 +44,52 @@
         },
         data () {
             return {
+                sin: '',
                 username: '',
                 password: '',
-                f: {},
                 farmers: [],
-                loginButtonText: 'Create Account'
+                signupText: 'Create Account'
             }
         },
         methods: {
-            signup () {
-                this.loginButtonText = 'Logging in...'
-                axios.post('/api/login', {
+            trySignup () {
+                this.signupText = 'Signing up...'
+                console.log(this.username)
+                console.log(this.password)
+                console.log(this.sin)
+                if (this.sin.length < 9) {
+                    this.addFarmer()
+                } else {
+                    this.addStockholder()
+                }
+            },
+            addFarmer () {
+                axios.post('/api/users/addfarmer', {
+                    headers:
+                        {
+                            'Content-Type': 'application/json'
+                        },
+                    data:
+                        {
+                            'username': this.username,
+                            'password': this.password,
+                            'sin': this.sin
+                        }})
+                    .then(response => {
+                        console.log('Response is: ')
+                        console.log(response)
+                        if (response.data.length > 0) {
+                            // success sign up
+                            this.signupText = 'Signed Up!'
+                            this.$nuxt.$router.replace({ path: '/' })
+                        } else {
+                            this.signupText = 'Failed!'
+                            setTimeout(() => { this.signupText = 'Sign Up' }, 3000)
+                        }
+                    })
+            },
+            addStockholder () {
+                axios.post('/api/users/add', {
                     headers:
                         {
                             'Content-Type': 'application/json'
@@ -68,14 +103,12 @@
                         console.log('Response is: ')
                         console.log(response)
                         if (response.data.length > 0) {
-                            // logged in
-                            this.loginButtonText = 'Logged in!'
-                            this.$store.user_sin = response.data[0].sin
-                            this.$store.loggedIn = true
-                            this.$nuxt.$router.replace({ path: '/stakeholder' })
+                            // success sign up
+                            this.signupText = 'Signed Up!'
+                            this.$nuxt.$router.replace({ path: '/' })
                         } else {
-                            this.loginButtonText = 'Failed!'
-                            setTimeout(() => { this.loginButtonText = 'Login' }, 3000)
+                            this.signupText = 'Failed!'
+                            setTimeout(() => { this.signupText = 'Sign Up' }, 3000)
                         }
                     })
             }

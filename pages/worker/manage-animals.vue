@@ -21,29 +21,30 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(animal, index) in animals" :key="animal.id">
-            <!--<td>{{ animal.id }}</td>-->
-            <td>{{ animal.species }}</td>
-            <td><input type="text" name="a_name" :value="animal.name" v-model="animal.name" size="10"><br></td>
-            <td><input type="number" class="shortInput" :value="animal.age" v-model="animal.age" size="5"></td>
-            <td><input type="number" class="shortInput" :value="animal.weight" v-model="animal.weight" size="5"></td>
-            <td>
-              <select v-model="animal.pennumber">
-                <option v-for="pen in pens" :value="pen.pennumber" key="pen.pennumber"  >{{pen.location}}</option>
-              </select>
-            </td>
-            <td>
-              <select v-model="animal.sin">
-                <option v-for="(farmer, farmerIndex) in farmers" :value="farmer.sin" key="farmer.sin" >{{farmer.firstname + ' ' + farmer.lastname}}</option>
-              </select>
-            </td>
-            <td>
-              <input v-show="true" type="button" class="actionButton updateButton" v-on:click="tryUpdate(index)" value="Update" />
-            </td>
-            <td>
-              <input v-show="true" type="button" class="actionButton deleteButton" v-on:click="tryDelete(index)" value="Delete" />
-            </td>
-          </tr>
+              <tr v-for="(animal, index) in animals" :key="animal.id">
+                <!--<td>{{ animal.id }}</td>-->
+                <td>{{ animal.species }}</td>
+                <td><input type="text" name="a_name" :value="animal.name" v-model="animal.name" size="10"><br></td>
+                <td><input type="number" class="shortInput" :value="animal.age" v-model="animal.age" size="5"></td>
+                <td><input type="number" class="shortInput" :value="animal.weight" v-model="animal.weight" size="5"></td>
+                <td>
+                <select v-model="animal.pennumber">
+                  <option v-for="pen in pens" :value="pen.pennumber" key="pen.pennumber"  >{{pen.location}}</option>
+                </select>
+                </td>
+                <td>
+                <select v-model="animal.sin">
+                    <option v-for="(farmer, farmerIndex) in farmers" :value="farmer.sin" key="farmer.sin" >{{farmer.firstname + ' ' + farmer.lastname}}</option>
+                    <option value="" key="default" selected >Not a Farmer</option>
+                </select>
+                </td>
+                <td>
+                    <input v-show="true" type="button" class="actionButton updateButton" v-on:click="tryUpdate(index)" value="Update" />
+                </td>
+                <td>
+                    <input v-show="true" type="button" class="actionButton deleteButton" v-on:click="tryDelete(index)" value="Delete" />
+                </td>
+              </tr>
           </tbody>
         </table>
       </div>

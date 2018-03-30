@@ -60,8 +60,31 @@ router.post('/users/update', bodyParser.json(), function (req, res, next) {
     })
 })
 
+router.post('/users/addfarmer', bodyParser.json(), function (req, res, next) {
+    const username = req.body.data.username
+    const password = req.body.data.password
+    const sin = req.body.data.sin
+
+    const query = 'INSERT INTO Users (username, password, sin) VALUES (:username, :password, :sin) ;'
+    connection.query(query,
+        {
+            type: connection.QueryTypes.INSERT,
+            replacements: {
+                username: username,
+                password: password,
+                sin: sin
+            }
+        })
+        .then(result => {
+            // result[1] is the number of rows changed
+            res.send(result)
+        }).catch((err) => {
+            res.json(400, {error: 'Error inserting user.'})
+        })
+})
+
 router.post('/users/add', bodyParser.json(), function (req, res, next) {
-    const userid = req.body.data.userid
+    console.log(req)
     const username = req.body.data.username
     const password = req.body.data.password
 
@@ -76,7 +99,7 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
         })
         .then(result => {
             // result[1] is the number of rows changed
-            res.send('/users')
+            res.send(result)
         }).catch((err) => {
             res.json(400, {error: 'Error inserting user.'})
         })
