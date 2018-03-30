@@ -6,8 +6,8 @@
           <span class="subsection-title" style="vertical-align: middle;">Product</span>
         </div>
         Enter Date Range:
-        <input v-model="fromDate" placeholder="From Date (yyyy-mm-dd)">
-        <input v-model="toDate" placeholder="To Date (yyyy-mm-dd)">
+        <input v-model="fromDate" placeholder="From Date (yyyy-mm-dd)" type="date">
+        <input v-model="toDate" placeholder="To Date (yyyy-mm-dd)" type="date">
         <input type="button" v-on:click="update(fromDate, toDate)" value="Submit" />
 
         <br><br><h1>Eggs</h1><br>
