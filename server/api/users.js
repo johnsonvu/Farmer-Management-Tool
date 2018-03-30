@@ -10,6 +10,8 @@ router.get('/users', function (req, res, next) {
         .then(users => {
             console.log(users)
             res.json(users)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying users.'})
         })
 })
 
@@ -30,6 +32,8 @@ router.get('/users/:username', function (req, res, next) {
       } else {
         res.status(404).json({})
       }
+    }).catch((err) => {
+      res.json(400, {error: 'Error querying users.'})
     })
 })
 
@@ -51,6 +55,8 @@ router.post('/users/update', bodyParser.json(), function (req, res, next) {
     .then(result => {
       // result[1] is the number of rows changed
       res.send('/users')
+    }).catch((err) => {
+      res.json(400, {error: 'Error updating user.'})
     })
 })
 
@@ -71,6 +77,8 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
         .then(result => {
             // result[1] is the number of rows changed
             res.send('/users')
+        }).catch((err) => {
+            res.json(400, {error: 'Error inserting user.'})
         })
 })
 
@@ -90,6 +98,8 @@ router.post('/login', bodyParser.json(), function (req, res, next) {
         .then(result => {
             // result[1] is the number of rows changed
             res.send(result)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying users.'})
         })
 })
 

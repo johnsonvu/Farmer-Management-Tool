@@ -38,6 +38,8 @@ router.get('/stats/animal/performance/:option/:option2', function (req, res, nex
         .then(animals => {
             console.log(animals)
             res.json(animals)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying performance aggregation.'})
         })
 })
 
@@ -72,6 +74,8 @@ router.get('/stats/animal/performance', function (req, res, next) {
         .then(animals => {
             console.log(animals)
             res.json(animals)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying performance.'})
         })
 })
 
@@ -89,6 +93,8 @@ router.get('/stats/farmer/allstars', function (req, res, next) {
         .then(farmers => {
             console.log(farmers)
             res.json(farmers)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying allstars.'})
         })
 })
 
