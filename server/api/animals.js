@@ -27,6 +27,33 @@ router.get('/animals/pen-farmer-list', function (req, res, next) {
         })
 })
 
+router.get('/animals/pen-farmer-list/choose', function (req, res, next) {
+    const age = req.query.age
+    const weight = req.query.weight
+    const name = req.query.name
+    const animal = req.query.animal
+    var cond = '';
+    if (age) {
+        cond = cond + 'a.age, '
+    }
+    if (name) {
+        cond = cond + 'a.name, '
+    }
+    if (weight) {
+        cond = cond + 'a.weight, '
+    }
+    const query = `SELECT a.id, ${cond}a.species, p.location, f.firstname, f.lastname
+        FROM Animal a
+        JOIN Penhouse p ON p.PenNumber = a.PenNumber
+        JOIN Farmer f ON f.SIN = a.SIN
+        WHERE a.species = '${animal}';`
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(animals => {
+            console.log(animals)
+            res.json(animals)
+        })
+})
+
 /* PUT animal update */
 router.put('/animals/update/:id', bodyParser.json(), function (req, res, next) {
     const id = req.params.id
@@ -45,7 +72,21 @@ router.put('/animals/update/:id', bodyParser.json(), function (req, res, next) {
 })
 
 /* delete animal */
-
+router.delete('/animals/delete/:id', function (req, res, next) {
+    const id = req.params.id
+    
+    const query = `DELETE FROM Animal WHERE Id = ${id};`
+    connection.query(query, { type: connection.QueryTypes.DELETE })
+        .then((err, animals) => {
+            if(err){
+                console.log(err)
+                res.jons(err)
+            }else{
+                console.log(animals)
+                res.json(animals)
+            }
+        })
+})
 
 router.get('/animals/feed', function (req, res, next) {
     const query = `SELECT DISTINCT ON(a.id) a.id, a.age, a.weight, a.name, a.sin, a.species, a.pennumber, m.food, m.water,

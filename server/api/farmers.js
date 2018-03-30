@@ -4,6 +4,15 @@ const bodyParser = require('body-parser')
 
 const router = Router()
 
+router.get('/farmers/all', function (req, res, next){
+    const query = 'SELECT * FROM Farmer;'
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(farmers => {
+            console.log(farmers)
+            res.json(farmers)
+        })
+})
+
 router.get('/farmers/workers', function (req, res, next) {
     const query = `WITH manager_name AS (
             SELECT * FROM manager m NATURAL JOIN farmer
@@ -29,8 +38,81 @@ router.get('/farmers/managers', function (req, res, next) {
         })
 })
 
-router.put('/farmers/workers', bodyParser.json(), function (req, res, next) {
+router.post('/farmers/workers', bodyParser.json(), function (req, res, next) {
     const sin = req.body.data.sin
+    const firstname = req.body.data.firstname
+    const lastname = req.body.data.lastname
+    const manager_sin = req.body.data.manager_sin
+
+    const query = 'INSERT INTO Farmer (firstname, lastname, sin) VALUES (:firstname, :lastname, :sin);'
+    const query2 = 'INSERT INTO Worker (sin, manager_sin) VALUES (:sin, :manager_sin);'
+
+    connection.query(query,
+        {
+            type: connection.QueryTypes.INSERT,
+            replacements: {
+                sin: sin,
+                firstname: firstname,
+                lastname: lastname
+            }
+        })
+        .then(result => {
+            // result[1] is the number of rows changed
+            connection.query(query2,
+                {
+                    type: connection.QueryTypes.INSERT,
+                    replacements: {
+                        sin: sin,
+                        manager_sin: manager_sin
+                    }
+                })
+                .then(result => {
+                    res.send('SUCCESS')
+                })
+        })
+        .catch(err => {
+            console.log('Error is: ')
+            console.log(err)
+        })
+})
+
+router.post('/farmers/managers', bodyParser.json(), function (req, res, next) {
+    const sin = req.body.data.sin
+    const firstname = req.body.data.firstname
+    const lastname = req.body.data.lastname
+
+    const query = 'INSERT INTO Farmer (firstname, lastname, sin) VALUES (:firstname, :lastname, :sin);'
+    const query2 = 'INSERT INTO Manager (sin) VALUES (:sin);'
+
+    connection.query(query,
+        {
+            type: connection.QueryTypes.INSERT,
+            replacements: {
+                sin: sin,
+                firstname: firstname,
+                lastname: lastname
+            }
+        })
+        .then(result => {
+            connection.query(query2,
+                {
+                    type: connection.QueryTypes.INSERT,
+                    replacements: {
+                        sin: sin
+                    }
+                })
+                .then(result => {
+                    res.send('SUCCESS')
+                })
+        })
+        .catch(err => {
+            console.log('Error is: ')
+            console.log(err)
+        })
+})
+
+router.put('/farmers/workers/:sin', bodyParser.json(), function (req, res, next) {
+    const sin = req.params.sin
     const firstname = req.body.data.firstname
     const lastname = req.body.data.lastname
     const manager_sin = req.body.data.manager_sin
@@ -67,8 +149,8 @@ router.put('/farmers/workers', bodyParser.json(), function (req, res, next) {
         })
 })
 
-router.put('/farmers/managers', bodyParser.json(), function (req, res, next) {
-    const sin = req.body.data.sin
+router.put('/farmers/managers/:sin', bodyParser.json(), function (req, res, next) {
+    const sin = req.params.sin
     const firstname = req.body.data.firstname
     const lastname = req.body.data.lastname
 
@@ -92,40 +174,25 @@ router.put('/farmers/managers', bodyParser.json(), function (req, res, next) {
         })
 })
 
-router.get('/farmers/all', function (req, res, next){
-    const query = 'SELECT * FROM Farmer;'
-    connection.query(query, { type: connection.QueryTypes.SELECT })
-        .then(farmers => {
-            console.log(farmers)
-            res.json(farmers)
+router.delete('/farmers/:sin', bodyParser.json(), function (req, res, next) {
+    const sin = req.params.sin
+
+    const query = 'DELETE FROM Farmer WHERE sin = :sin;'
+
+    connection.query(query,
+        {
+            type: connection.QueryTypes.DELETE,
+            replacements: {
+                sin: sin
+            }
+        })
+        .then(result => {
+            res.send('SUCCESS')
+        })
+        .catch(err => {
+            console.log('Error is: ')
+            console.log(err)
         })
 })
-
-// router.post('/animals/feed', bodyParser.json(), function (req, res, next) {
-//     const date = req.body.data.date
-//     const food = req.body.data.food
-//     const water = req.body.data.water
-//     const animalId = req.body.data.animalId
-//     const sin = req.body.data.sin
-//
-//     const query = 'INSERT INTO MealFeeding (Date, Food, Water, AnimalId, SIN) VALUES (:date, :food, :water, :animalId, :sin);'
-//     connection.query(query,
-//         {
-//             type: connection.QueryTypes.INSERT,
-//             replacements: {
-//                 date: date,
-//                 food: food,
-//                 water: water,
-//                 animalId: animalId,
-//                 sin: sin
-//             }
-//         })
-//         .then(result => {
-//             // result[1] is the number of rows changed
-//             res.send('SUCCESS')
-//         })
-// })
-
-
 
 export default router
