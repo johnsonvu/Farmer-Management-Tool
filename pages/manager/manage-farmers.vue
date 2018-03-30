@@ -249,6 +249,12 @@
                         .then(async result => {
                             this.workers = (await axios.get('/api/farmers/workers')).data
                             this.managers = (await axios.get('/api/farmers/managers')).data
+                            for (var worker of this.workers) {
+                                worker.editMode = false
+                            }
+                            for (var manager of this.managers) {
+                                manager.editMode = false
+                            }
                         })
                 }
             }
