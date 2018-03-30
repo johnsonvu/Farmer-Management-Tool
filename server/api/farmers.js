@@ -13,6 +13,19 @@ router.get('/farmers/all', function (req, res, next){
         })
 })
 
+//fetches all farmers who don't have an account yet
+router.get('/farmers/nouser', function(req, res, next){
+    const query = `SELECT f.sin, f.firstname, f.lastname
+                        FROM Farmer f
+                        LEFT JOIN Users u ON u.sin = f.sin
+                        WHERE u.sin IS NULL;`
+    connection.query(query, {type: connection.QueryTypes.SELECT })
+        .then(farmers => {
+            console.log(farmers)
+            res.json(farmers)
+        })
+})
+
 router.get('/farmers/workers', function (req, res, next) {
     const query = `WITH manager_name AS (
             SELECT * FROM manager m NATURAL JOIN farmer

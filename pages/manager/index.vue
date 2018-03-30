@@ -37,11 +37,9 @@
 <style lang="stylus" scoped>
     .users-view
         padding-top 0
-
     .content
         position absolute
         width 100%
-
     .subsection
         background-color #fff
         border-radius 2px
@@ -60,7 +58,6 @@
             text-decoration underline
             &:hover
                 color #515ec4
-
     div.main-button {
         align-content center
         font-size: 1.5em;
