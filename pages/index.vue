@@ -2,13 +2,15 @@
   <section class="container">
     <div>
       <div v-show="!showLogin">
-        <Logo />
         <img src="../static/logo.png" alt="logo">
         <h1 class="title">
           Farmer's Management Project
         </h1>
         <div class="links">
           <a class="button--grey link" style="margin-left: 15px;" v-on:click="showLogin = true">Login</a>
+          <nuxt-link class="button--grey link"  :to="{ path: '/registration/SignupForm' }">
+            Sign Up
+          </nuxt-link>
         </div>
       </div>
       <login-form v-show="showLogin"></login-form>
