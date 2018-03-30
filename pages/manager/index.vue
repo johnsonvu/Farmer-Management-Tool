@@ -20,21 +20,6 @@
                         View Statistics
                     </nuxt-link>
                 </div>
-                <div class="main-button">
-                    <nuxt-link :to="{ path: '/worker/feed-animals' }">
-                        Log Feed Animals
-                    </nuxt-link>
-                </div>
-                <div class="main-button">
-                    <nuxt-link :to="{ path: '/worker/harvest-animals' }">
-                        Log Harvest Animals
-                    </nuxt-link>
-                </div>
-                <div class="main-button">
-                    <nuxt-link :to="{ path: '/animals' }">
-                        View Animals
-                    </nuxt-link>
-                </div>
             </div>
         </div>
     </section>
