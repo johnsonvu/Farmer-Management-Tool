@@ -7,7 +7,7 @@
         </router-link>
         <nuxt-link to="/worker">Worker</nuxt-link>
         <nuxt-link to="/manager">Manager</nuxt-link>
-        <nuxt-link to="/stakeholder">Stakeholder</nuxt-link>
+        <nuxt-link v-show="true" to="/stakeholder">Stakeholder</nuxt-link>
         <a class="github" href="https://github.com/johnsonvu/cpsc304-project-starter" target="_blank" rel="noopener">
           Github
         </a>

@@ -1,5 +1,5 @@
 <template>
-    <section class="users-view">
+    <section v-show="$store.isManager" class="users-view">
         <div class="content">
             <div class="subsection">
                 <div style="margin: 25px 10px;">

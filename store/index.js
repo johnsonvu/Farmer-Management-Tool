@@ -2,8 +2,10 @@ import Vuex from 'vuex'
 
 const createStore = () => {
     return new Vuex.Store({
-        loggedIn: false,
-        user_sin: ''
+        isLoggedIn: false,
+        user_sin: '1234',
+        isManager: false,
+        isWorker: false
     })
 }
 

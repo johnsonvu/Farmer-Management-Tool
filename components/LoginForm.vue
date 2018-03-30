@@ -6,6 +6,7 @@
         </h1>
         <br />
         <table style="margin: auto">
+            <tbody>
             <tr>
                 <td style="text-align: right">Username: </td>
                 <td><input v-model="username" type="text" /></td>
@@ -17,6 +18,7 @@
             <tr>
                 <td colspan="2" style="text-align: center"><input type="button" class="button--grey" style="margin-top:1em" v-on:click="login" :value="loginButtonText" /></td>
             </tr>
+        </tbody>
         </table>
     </div>
 </template>
@@ -51,7 +53,10 @@
                             // logged in
                             this.loginButtonText = 'Logged in!'
                             this.$store.user_sin = response.data[0].sin
-                            this.$store.loggedIn = true
+                            this.$store.isLoggedIn = true
+                            this.$store.isManager = response.data[0].ismanager
+                            this.$store.isWorker = response.data[0].isworker
+                            console.log(this.$store.isLoggedIn)
                             this.$nuxt.$router.replace({ path: '/stakeholder' })
                         } else {
                             this.loginButtonText = 'Failed!'

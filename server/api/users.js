@@ -35,12 +35,11 @@ router.get('/users/:username', function (req, res, next) {
     }).catch((err) => {
       res.json(400, {error: 'Error querying users.'})
     })
-})
 
 router.post('/users/update', bodyParser.json(), function (req, res, next) {
-  const userid = req.body.data.userid
-  const username = req.body.data.username
-  const password = req.body.data.password
+    const userid = req.body.data.userid
+    const username = req.body.data.username
+    const password = req.body.data.password
 
   const query = 'UPDATE Users SET username = :username, password = :password WHERE userid = :userid ;'
   connection.query(query,
@@ -58,7 +57,6 @@ router.post('/users/update', bodyParser.json(), function (req, res, next) {
     }).catch((err) => {
       res.json(400, {error: 'Error updating user.'})
     })
-})
 
 router.post('/users/addfarmer', bodyParser.json(), function (req, res, next) {
     const username = req.body.data.username
@@ -109,7 +107,15 @@ router.post('/login', bodyParser.json(), function (req, res, next) {
     const username = req.body.data.username
     const password = req.body.data.password
 
-    const query = 'SELECT * FROM Users WHERE username = :username AND password = :password;'
+    const query = `WITH managers AS (
+            SELECT sin FROM manager
+        ), workers AS (
+            SELECT sin FROM worker
+        )
+        SELECT f.sin,
+        CASE WHEN f.sin IN (SELECT * FROM managers) THEN true ELSE false END AS isManager,
+        CASE WHEN f.sin IN (SELECT * FROM workers) THEN true ELSE false END AS isWorker 
+        FROM farmer f WHERE f.sin IN (SELECT sin FROM Users WHERE username=:username AND password=:password);`
     connection.query(query,
         {
             type: connection.QueryTypes.SELECT,
