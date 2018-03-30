@@ -29,6 +29,7 @@
                 <td>
                 <select v-model="animal.sin">
                     <option v-for="(farmer, farmerIndex) in farmers" :value="farmer.sin" key="farmer.sin" >{{farmer.firstname + ' ' + farmer.lastname}}</option>
+                    <option value="" key="default" selected >Not a Farmer</option>
                 </select>
                 </td>
                 <td>
