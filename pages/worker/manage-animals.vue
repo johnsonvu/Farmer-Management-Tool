@@ -115,7 +115,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  .animals-view
+  .main-view
     padding-top 0
 
   .content
