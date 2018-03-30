@@ -117,7 +117,7 @@ router.get('/products/wool/range', function (req, res, next) {
 })
 
 router.get('/products/eggs/average', function (req, res, next) {
-    const query = `SELECT AVG(e.quantity)
+    const query = `SELECT AVG(e.quantity)::DECIMAL(16,2)
         FROM Product p
         JOIN Egg e ON e.productid = p.productid;`
     connection.query(query, { type: connection.QueryTypes.SELECT })
@@ -128,7 +128,7 @@ router.get('/products/eggs/average', function (req, res, next) {
 })
 
 router.get('/products/milk/average', function (req, res, next) {
-    const query = `SELECT AVG(m.volume)
+    const query = `SELECT AVG(m.volume)::DECIMAL(16,2)
         FROM Product p
         JOIN Milk m ON m.productid = p.productid;`
     connection.query(query, { type: connection.QueryTypes.SELECT })
@@ -139,7 +139,7 @@ router.get('/products/milk/average', function (req, res, next) {
 })
 
 router.get('/products/wool/average', function (req, res, next) {
-    const query = `SELECT AVG(w.weight)
+    const query = `SELECT AVG(w.weight)::DECIMAL(16,2)
         FROM Product p
         JOIN Wool w ON w.productid = p.productid;`
     connection.query(query, { type: connection.QueryTypes.SELECT })
@@ -148,6 +148,41 @@ router.get('/products/wool/average', function (req, res, next) {
             res.json(products)
         })
 })
+
+router.get('/products/eggs/count', function (req, res, next) {
+    const query = `SELECT COUNT(*)
+        FROM Product p
+        JOIN Egg e ON e.productid = p.productid;`
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(products => {
+            console.log(products)
+            res.json(products)
+        })
+})
+
+router.get('/products/milk/count', function (req, res, next) {
+    const query = `SELECT COUNT(*)
+        FROM Product p
+        JOIN Milk m ON m.productid = p.productid;`
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(products => {
+            console.log(products)
+            res.json(products)
+        })
+})
+
+router.get('/products/wool/count', function (req, res, next) {
+    const query = `SELECT COUNT(*)
+        FROM Product p
+        JOIN Wool w ON w.productid = p.productid;`
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(products => {
+            console.log(products)
+            res.json(products)
+        })
+})
+
+
 
 router.get('/products/eggs/range/average', function (req, res, next) {
     const fromDate = req.query.fromDate
@@ -190,5 +225,53 @@ router.get('/products/wool/range/average', function (req, res, next) {
             res.json(products)
         })
 })
+
+
+router.get('/products/eggs/range/count', function (req, res, next) {
+    const fromDate = req.query.fromDate
+    const toDate = req.query.toDate
+    const query = `SELECT COUNT(e.quantity)
+        FROM Product p
+        JOIN Egg e ON e.productid = p.productid
+        WHERE p.productiondate >= '${fromDate}' AND p.productiondate <= '${toDate}';`
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(products => {
+            console.log(products)
+            res.json(products)
+        })
+})
+
+router.get('/products/milk/range/count', function (req, res, next) {
+    const fromDate = req.query.fromDate
+    const toDate = req.query.toDate
+    const query = `SELECT COUNT(m.volume)
+        FROM Product p
+        JOIN Milk m ON m.productid = p.productid
+        WHERE p.productiondate >= '${fromDate}' AND p.productiondate <= '${toDate}';`
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(products => {
+            console.log(products)
+            res.json(products)
+        })
+})
+
+router.get('/products/wool/range/count', function (req, res, next) {
+    const fromDate = req.query.fromDate
+    const toDate = req.query.toDate
+    const query = `SELECT COUNT(w.weight)
+        FROM Product p
+        JOIN Wool w ON w.productid = p.productid
+        WHERE p.productiondate >= '${fromDate}' AND p.productiondate <= '${toDate}';`
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(products => {
+            console.log(products)
+            res.json(products)
+        })
+})
+
+
+
+
+
 
 export default router

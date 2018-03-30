@@ -3,7 +3,7 @@
         <table class="simple-table">
           <thead>
             <tr>
-              <th>Id</th>
+              <!--<th>Id</th>-->
               <th>Species</th>
               <th>Name</th>
               <th>Age</th>
@@ -16,11 +16,11 @@
           </thead>
           <tbody>
               <tr v-for="(animal, index) in animals" :key="animal.id">
-                <td>{{ animal.id }}</td>
+                <!--<td>{{ animal.id }}</td>-->
                 <td>{{ animal.species }}</td>
                 <td><input type="text" name="a_name" :value="animal.name" v-model="animal.name" size="10"><br></td>
-                <td><input type="text" name="a_age" :value="animal.age" v-model="animal.age" size="5"></td>
-                <td><input type="text" name="a_weight" :value="animal.weight" v-model="animal.weight" size="5"></td>
+                <td><input type="number" class="shortInput" :value="animal.age" v-model="animal.age" size="5"></td>
+                <td><input type="number" class="shortInput" :value="animal.weight" v-model="animal.weight" size="5"></td>
                 <td>
                 <select v-model="animal.pennumber">
                   <option v-for="pen in pens" :value="pen.pennumber" key="pen.pennumber"  >{{pen.location}}</option>
@@ -159,5 +159,8 @@ tr.headerRow th {
 .deleteButton:hover {
     background-color: #D9534F;
     color: white;
+}
+.shortInput {
+  width: 50px;
 }
 </style>

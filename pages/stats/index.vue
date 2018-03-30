@@ -6,6 +6,7 @@
                     <span class="subsection-title" style="vertical-align: middle;">Statistics</span>
                 </div>
 
+                <!--Category Performance-->
                 <div>
                     View the
                     <select id="performanceOption" name="Performance" v-on:change="updateCategories()">
@@ -32,6 +33,36 @@
                     </template>
                     </tbody>
                 </table>
+
+                <!--Animal Performance Stats-->
+                <br />
+                <div>
+                    Animals' Average Yields:
+                </div>
+                <br />
+
+                <table class="simple-table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Species</th>
+                        <th>Weight</th>
+                        <th>Average Yield</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <template v-for="animal in animals">
+                        <tr>
+                            <td>{{animal.name}}</td>
+                            <td>{{animal.age}}</td>
+                            <td>{{animal.species}}</td>
+                            <td>{{animal.weight}}</td>
+                            <td>{{animal.unit_avg}}</td>
+                        </tr>
+                    </template>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
@@ -42,13 +73,17 @@
 
     export default {
         async asyncData () {
-            let { data } = await axios.get('/api/stats/animal/performance/max')
-            return { categories: data }
+            let [categoryPerformanceData, animalPerformanceData] = await Promise.all(
+                [axios.get('/api/stats/animal/performance/max'), axios.get('/api/stats/animal/performance')]
+            )
+            return { categories: categoryPerformanceData.data, animals: animalPerformanceData.data }
         },
+
         head () {
             return {
                 title: 'Statistics',
-                categories: []
+                categories: [],
+                animals: []
             }
         },
         methods: {
