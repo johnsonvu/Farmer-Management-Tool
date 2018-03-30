@@ -111,6 +111,13 @@
             </tr>
             <tr><td colspan="6" v-on:click="newManagers.push({})" style="text-align: center; font-size: 1.2em; cursor: pointer">+</td></tr>
         </table>
+
+        <div class="adminTool" style="width: 100%; text-align: center">
+            Admin Tools: <br /><br />
+            Delete Farmer by SIN:
+            <input type="text" v-model="toDelete" />
+            <input type="button" value="Delete" v-on:click="deleteFarmer" />
+        </div>
     </div>
 </template>
 
@@ -141,7 +148,8 @@
         data () {
             return {
                 newWorkers: [],
-                newManagers: []
+                newManagers: [],
+                toDelete: ''
             }
         },
 
@@ -257,6 +265,21 @@
                             }
                         })
                 }
+            },
+            deleteFarmer () {
+                if (confirm(`Are you sure you really want to delete farmer ${this.toDelete}?`)) {
+                    axios.delete(`/api/farmers/${this.toDelete}`)
+                        .then(async result => {
+                            this.workers = (await axios.get('/api/farmers/workers')).data
+                            this.managers = (await axios.get('/api/farmers/managers')).data
+                            for (var worker of this.workers) {
+                                worker.editMode = false
+                            }
+                            for (var manager of this.managers) {
+                                manager.editMode = false
+                            }
+                        })
+                }
             }
         }
     }
@@ -358,5 +381,10 @@
     .deleteButton:hover {
         background-color: red;
         color: white;
+    }
+    .adminTool {
+        padding: 1em;
+        border: solid black 2px;
+        border-radius: 3px;
     }
 </style>
