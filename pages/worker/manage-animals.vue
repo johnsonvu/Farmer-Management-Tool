@@ -77,6 +77,13 @@ export default {
         update (id, data) {
             console.log(data)
           axios.put(`/api/animals/update/${id}`, data)
+          .then(response => {
+              confirm(`Successfully updated ${response.data}`)
+          })
+          .catch(error => {
+              console.log(error.response)
+              confirm(error.response.data.error)
+          })
         },
         tryDelete (index) {
           console.log('delete button pushed')

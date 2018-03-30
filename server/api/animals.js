@@ -67,7 +67,10 @@ router.put('/animals/update/:id', bodyParser.json(), function (req, res, next) {
     connection.query(query, { type: connection.QueryTypes.UPDATE })
         .then(animals => {
             console.log(animals)
-            res.json(animals)
+            res.json(name)
+        }).catch(err => {
+            console.log(err)
+            res.json(400, {error: 'Invalid value(s) entered. Please check your inputs!'})
         })
 })
 
@@ -77,14 +80,12 @@ router.delete('/animals/delete/:id', function (req, res, next) {
     
     const query = `DELETE FROM Animal WHERE Id = ${id};`
     connection.query(query, { type: connection.QueryTypes.DELETE })
-        .then((err, animals) => {
-            if(err){
-                console.log(err)
-                res.json(err)
-            }else{
-                console.log(animals)
-                res.json(animals)
-            }
+        .then(animals => {
+            console.log(animals)
+            res.json(animals)
+        }).catch(err => {
+            console.log(err)
+            res.status(500).json({msg: 'Delete failed!'})
         })
 })
 
