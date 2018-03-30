@@ -77,19 +77,30 @@ export default {
         update (id, data) {
             console.log(data)
           axios.put(`/api/animals/update/${id}`, data)
+          .then(response => {
+              confirm(`Successfully updated ${response.data}`)
+          })
+          .catch(error => {
+              console.log(error.response)
+              confirm(error.response.data.error)
+          })
         },
         tryDelete (index) {
           console.log('delete button pushed')
           let id = this.animals[index].id
-          this.delete(id)
+          let name = this.animals[index].name
+          this.delete(id, name)
         },
-        delete (id) {
-          console.log(id)
-          axios.delete(`/api/animals/delete/${id}`)
-          .then((response) => {
-            console.log('axios log: ', response)
-          })
-          .catch(error => Promise.reject(error))
+        delete (id, name) {
+          if (confirm(`Are you sure you really want to delete ${name}?`)) {
+            console.log(id)
+            axios.delete(`/api/animals/delete/${id}`)
+            .then((response) => {
+              console.log('axios log: ', response)
+              this.asynchData()
+            })
+            .catch(error => Promise.reject(error))
+          }
         }
     }
 }

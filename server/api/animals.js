@@ -11,6 +11,8 @@ router.get('/animals', function (req, res, next) {
         .then(animals => {
             console.log(animals)
             res.json(animals)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying the animals.'})
         })
 })
 
@@ -24,6 +26,8 @@ router.get('/animals/pen-farmer-list', function (req, res, next) {
         .then(animals => {
             console.log(animals)
             res.json(animals)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying pen-farmer list.'})
         })
 })
 
@@ -51,6 +55,8 @@ router.get('/animals/pen-farmer-list/choose', function (req, res, next) {
         .then(animals => {
             console.log(animals)
             res.json(animals)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying pen-farmer list.'})
         })
 })
 
@@ -67,7 +73,16 @@ router.put('/animals/update/:id', bodyParser.json(), function (req, res, next) {
     connection.query(query, { type: connection.QueryTypes.UPDATE })
         .then(animals => {
             console.log(animals)
+<<<<<<< HEAD
             res.json(animals)
+        }).catch((err) => {
+            res.json(400, {error: 'Error updating animal.'})
+=======
+            res.json(name)
+        }).catch(err => {
+            console.log(err)
+            res.json(400, {error: 'Invalid value(s) entered. Please check your inputs!'})
+>>>>>>> c9714c54943e5c217916870e196091efc9556da7
         })
 })
 
@@ -77,14 +92,25 @@ router.delete('/animals/delete/:id', function (req, res, next) {
     
     const query = `DELETE FROM Animal WHERE Id = ${id};`
     connection.query(query, { type: connection.QueryTypes.DELETE })
+<<<<<<< HEAD
         .then((err, animals) => {
             if(err){
                 console.log(err)
-                res.jons(err)
+                res.json(err)
             }else{
                 console.log(animals)
                 res.json(animals)
             }
+        }).catch((err) => {
+            res.json(400, {error: 'Error deleting animal.'})
+=======
+        .then(animals => {
+            console.log(animals)
+            res.json(animals)
+        }).catch(err => {
+            console.log(err)
+            res.status(500).json({msg: 'Delete failed!'})
+>>>>>>> c9714c54943e5c217916870e196091efc9556da7
         })
 })
 
@@ -103,6 +129,8 @@ router.get('/animals/feed', function (req, res, next) {
         .then(animals => {
             console.log(animals)
             res.json(animals)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying animals to feed.'})
         })
 })
 
@@ -128,6 +156,8 @@ router.post('/animals/feed', bodyParser.json(), function (req, res, next) {
         .then(result => {
             // result[1] is the number of rows changed
             res.send('SUCCESS')
+        }).catch((err) => {
+            res.json(400, {error: 'Error feeding animal'})
         })
 })
 
@@ -152,6 +182,8 @@ router.get('/animals/harvest/chicken', function (req, res, next) {
         .then(animals => {
             console.log(animals)
             res.json(animals)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying animals to harvest.'})
         })
 })
 
@@ -176,6 +208,8 @@ router.get('/animals/harvest/cow', function (req, res, next) {
         .then(animals => {
             console.log(animals)
             res.json(animals)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying animals to harvest.'})
         })
 })
 
@@ -200,6 +234,8 @@ router.get('/animals/harvest/sheep', function (req, res, next) {
         .then(animals => {
             console.log(animals)
             res.json(animals)
+        }).catch((err) => {
+            res.json(400, {error: 'Error querying animals to harvest.'})
         })
 })
 
@@ -230,7 +266,11 @@ router.post('/animals/harvest/chicken', bodyParser.json(), function (req, res, n
                 })
                 .then(result => {
                     res.send('SUCCESS')
+                }, (err) => {
+                    res.json(400, {error: 'Error harvesting chicken.'})
                 })
+        }).catch((err) => {
+            res.json(400, {error: 'Error harvesting chicken.'})
         })
 })
 
@@ -261,7 +301,11 @@ router.post('/animals/harvest/cow', bodyParser.json(), function (req, res, next)
                 })
                 .then(result => {
                     res.send('SUCCESS')
+                }).catch((err) => {
+                    res.json(400, {error: 'Error harvesting cow.'})
                 })
+        }).catch((err) => {
+            res.json(400, {error: 'Error harvesting cow.'})
         })
 })
 
@@ -292,7 +336,11 @@ router.post('/animals/harvest/sheep', bodyParser.json(), function (req, res, nex
                 })
                 .then(result => {
                     res.send('SUCCESS')
+                }).catch((err) => {
+                    res.json(400, {error: 'Error harvesting sheep.'})
                 })
+        }).catch((err) => {
+            res.json(400, {error: 'Error harvesting sheep.'})
         })
 })
 

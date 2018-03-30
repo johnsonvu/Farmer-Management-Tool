@@ -20,6 +20,11 @@
                         View Statistics
                     </nuxt-link>
                 </div>
+                <div class="main-button">
+                    <nuxt-link :to="{ path: '/product' }">
+                        View Products
+                    </nuxt-link>
+                </div>
             </div>
         </div>
     </section>

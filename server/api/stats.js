@@ -73,4 +73,21 @@ router.get('/stats/animal/performance', function (req, res, next) {
         })
 })
 
+router.get('/stats/farmer/allstars', function (req, res, next) {
+    const query = `SELECT f.sin, f.firstname, f.lastname 
+        FROM farmer f
+        WHERE NOT EXISTS(
+            SELECT aa.species 
+            FROM animal aa 
+            EXCEPT (
+                SELECT a.species FROM animal a WHERE f.sin=a.sin
+            )
+        )`
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(farmers => {
+            console.log(farmers)
+            res.json(farmers)
+        })
+})
+
 export default router
