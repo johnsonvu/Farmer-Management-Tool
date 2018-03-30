@@ -74,4 +74,23 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
         })
 })
 
+router.post('/login', bodyParser.json(), function (req, res, next) {
+    const username = req.body.data.username
+    const password = req.body.data.password
+
+    const query = 'SELECT * FROM Users WHERE username = :username AND password = :password;'
+    connection.query(query,
+        {
+            type: connection.QueryTypes.SELECT,
+            replacements: {
+                username: username,
+                password: password
+            }
+        })
+        .then(result => {
+            // result[1] is the number of rows changed
+            res.send(result)
+        })
+})
+
 export default router
