@@ -38,7 +38,15 @@
                         <option value="MAX">best</option>
                         <option value="MIN">lowest</option>
                     </select>
-                    yield average of an animal from each species:
+                    yield of the average/sum of an animal from each species:
+                </div>
+                <div>
+                    View the
+                    <select id="performanceOption2" v-model="option2" name="Performance2" v-on:change="updateCategories()">
+                        <option value="AVG">average</option>
+                        <option value="SUM">sum</option>
+                    </select>
+                    yield of an animal from each species:
                 </div>
                 <br />
 
@@ -46,7 +54,7 @@
                     <thead>
                     <tr>
                         <th>Species</th>
-                        <th>Average Yield</th>
+                        <th>{{option2}} Yield</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -62,7 +70,7 @@
                 <!--Animal Performance Stats-->
                 <br />
                 <div>
-                    Animals' Average Yields:
+                    Animals' {{option2}} Yields:
                 </div>
                 <br />
 
@@ -73,7 +81,7 @@
                         <th>Age</th>
                         <th>Species</th>
                         <th>Weight</th>
-                        <th>Average Yield</th>
+                        <th>{{option2}} Yield</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -100,7 +108,7 @@
         async asyncData () {
             let [categoryPerformanceData, animalPerformanceData, allstars] = await Promise.all(
                 [
-                    axios.get('/api/stats/animal/performance/max'),
+                    axios.get('/api/stats/animal/performance/max/avg'),
                     axios.get('/api/stats/animal/performance'),
                     axios.get('/api/stats/farmer/allstars')
                 ]
@@ -114,16 +122,24 @@
 
         head () {
             return {
-                title: 'Statistics',
+                title: 'Statistics'
+            }
+        },
+        data () {
+            return {
                 categories: [],
                 animals: [],
-                allstars: []
+                allstars: [],
+                option1: 'MAX',
+                option2: 'AVG'
             }
         },
         methods: {
             async updateCategories () {
                 var box = document.getElementById('performanceOption')
-                axios.get('/api/stats/animal/performance/' + box.options[box.selectedIndex].value).then((response) => {
+                var box2 = document.getElementById('performanceOption2')
+                axios.get('/api/stats/animal/performance/' + box.options[box.selectedIndex].value +
+                    '/' + box2.options[box2.selectedIndex].value).then((response) => {
                     this.categories = response.data
                 })
             }

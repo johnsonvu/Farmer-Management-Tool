@@ -3,8 +3,9 @@ var connection = require('../configs/sequelize')
 const bodyParser = require('body-parser')
 const router = Router()
 
-router.get('/stats/animal/performance/:option', function (req, res, next) {
+router.get('/stats/animal/performance/:option/:option2', function (req, res, next) {
     const option = req.params.option
+    const option2 = req.params.option2
     const query = `WITH production_units AS (
             SELECT p.productid, p.productiondate, p.animalid, m.volume AS unit
             FROM product p
@@ -20,18 +21,19 @@ router.get('/stats/animal/performance/:option', function (req, res, next) {
             FROM product p
             INNER JOIN wool w
             ON p.productid = w.productid
-        ), production_avg AS (
+        ), production_stat AS (
             SELECT a.id, a.species, 
-            AVG(CASE WHEN ps.unit IS NULL THEN 0 ELSE ps.unit END)::DECIMAL(16,2) AS unit_avg
+            ` + option2 + `(CASE WHEN ps.unit IS NULL THEN 0 ELSE ps.unit END)::DECIMAL(16,2) AS unit_stat
             FROM animal a
             LEFT JOIN production_units ps
             ON a.id = ps.animalid
             GROUP BY a.id
             ORDER BY species
         )
-        SELECT species, ` + option + `(unit_avg) AS unit
-        FROM production_avg 
-        GROUP BY species`
+        SELECT species, ` + option + `(unit_stat) AS unit
+        FROM production_stat 
+        GROUP BY species
+        ORDER BY species`
     connection.query(query, { type: connection.QueryTypes.SELECT })
         .then(animals => {
             console.log(animals)
@@ -65,7 +67,7 @@ router.get('/stats/animal/performance', function (req, res, next) {
             GROUP BY a.id
             ORDER BY species
         )
-        SELECT * FROM production_avg pa JOIN animal a ON pa.id = a.id`
+        SELECT * FROM production_avg pa JOIN animal a ON pa.id = a.id ORDER BY pa.species`
     connection.query(query, { type: connection.QueryTypes.SELECT })
         .then(animals => {
             console.log(animals)
